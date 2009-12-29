@@ -1,0 +1,97 @@
+;; generica 
+;; language specification
+;; generica is a lisp dialect that supports high concurrency (Erlang style) 
+;; as well as a generic object oriented system (as in CLOS)
+;; and multimethods (as in Clojure)
+
+;; the prototype should be written in c and is interpreted (for now)
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;; some example code: ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; classes, objects & generic methods:
+(defclass creature
+    ((species :reader :initial nil)))
+      
+(defclass human
+    ((species :initial "HUMAN")
+     (name :accessor)
+     (age :reader)
+     (salary :accessor)))
+
+(defclass animal
+    ((age :reader)
+     (owner :accessor))) ; person that owns the animal
+
+(defclass dog (animal) ; dog inherits from animal
+  ((species :initial "dog")))
+    
+(defgeneric make-sound (creature))
+
+(defmethod make-sound ((d dog))
+  (print "wuff"))
+
+(defmethod make-sound ((h human))
+  (print "Hello, how are you?"))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; server & threading example:
+(defn start-server (port)
+  (let ((sock (new net:socket :port port)))
+    (accepting-loop sock)))
+
+; loops and accepts incoming connections on socket,
+; creating a subprocess for each and waiting for the next connection
+(defn accepting-loop (socket)
+  (do
+   ; accept waits on the given socket, until a new incoming connection
+   ; is created  
+   (process:spawn server-loop (net:accept socket)) 
+   (accepting-loop socket))) ; loop (tail recursion)
+
+; this loop will write a message to a connected client
+; into eternety (or, until the client disconnects)
+; every second
+(defn server-loop (socket)
+  (do
+   (write socket "Welcome on the server!")
+   (process:sleep 1000) ; sleep for 1 sec
+   (server-loop socket))) ; loop (tail recursion)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; another example with the actor-model, which is characterized by
+; independent processes, that communicate with each other via messages
+; (as in erlang):
+
+(defn start-actors ()
+  (let ((pid1 (process:spawn loop1))
+        (pid2 (process:spawn loop2)))
+    (! pid1 {:pid => pid2}))) ; send message to pid2 with pid1
+
+(defn unknown-message (msg)
+              (print (concat "got unkown message: " (inspect msg))))
+
+(defactor loop1 ()
+    (receive
+     (match {:pid => pid} ; match by this message-pattern
+            (! pid {:ping => (self)})
+            (loop1))
+     (match {:pong => pid} ; and here by this (similar to erlangs pattern matching)
+            (do
+             (print "got pong!")
+             (die)))
+     (match-any msg ; this simply matches any non-matched messages
+                (unknown-message msg))))
+
+(defactor loop2 ()
+  (receive
+   (match {:ping => pid}
+          (do
+           (print "got ping!")
+           (print "sending pong!")
+            (! pid {:pong => (self)})))
+   (match-any msg
+              (unknown-message msg))))
