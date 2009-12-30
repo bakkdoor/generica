@@ -9,7 +9,7 @@ digit		[0-9]
 letter          [A-Za-z]
 special         [-+?!_=*/^|><]
 int_lit 	-?{digit}+
-double_lit      -?{digit}*.{digit}+
+double_lit      -?{digit}+.{digit}+
 string_lit      \"[^\"\n]*\"
 lparen          \(
 rparen          \)
