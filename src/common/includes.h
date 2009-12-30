@@ -1,6 +1,7 @@
 #ifndef _COMMON_INCLUDES_H_
 #define _COMMON_INCLUDES_H_
 
+#include <stdarg.h>
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
@@ -10,5 +11,7 @@
 #include "types.h"
 #include "gobject.h"
 #include "functions.h"
+#include "eval.h"
+#include "utils.h"
 
 #endif /* _COMMON_INCLUDES_H_ */

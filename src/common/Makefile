@@ -1,4 +1,4 @@
-OBJS	= gobject.o functions.o eval.o
+OBJS	= gobject.o functions.o eval.o utils.o
 
 CC	= gcc
 CFLAGS	= -g -Wall -ansi -pedantic
@@ -13,6 +13,9 @@ functions.o: functions.c
 
 eval.o: eval.c
 	$(CC) $(CFLAGS) -c eval.c -o eval.o
+
+utils.o: utils.c
+	$(CC) $(CFLAGS) -c utils.c -o utils.o
 
 clean:
 	rm -f *.o
