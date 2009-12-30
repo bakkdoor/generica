@@ -1,5 +1,14 @@
 #include "includes.h"
 
+gobject *nil;
+gobject *t;
+
+void init_global_objects()
+{
+  nil = new_object(OBJ_NIL);
+  t = new_object(OBJ_T);
+}
+
 gobject* new_object(int type)
 {
   gobject *obj = (gobject*)malloc(sizeof(gobject));

@@ -6,8 +6,8 @@ typedef struct gobject_t gobject;
 
 /* cons cell consists of car & cdr */
 typedef struct cons_cell_t {
-  struct gobject *car;
-  struct gobject *cdr;
+  gobject *car;
+  gobject *cdr;
 } cons_cell;
 
 struct gobject_t {
@@ -47,6 +47,11 @@ struct gobject_t {
 /* 
    functions
 */
+
+extern gobject *nil;
+extern gobject *t;
+
+void init_global_objects();
 
 gobject* new_object(int type);
 
