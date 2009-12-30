@@ -27,3 +27,17 @@ gobject* cdr(gobject *obj)
   }
   return nil;
 }
+
+gobject* empty(gobject *obj)
+{
+  if(obj && obj->type == OBJ_CONS) {
+    if(!obj->value.ccell.car) {
+      return t;
+    } else {
+      return nil;
+    }
+  } else {
+    warn("Calling 'empty' on non-list object!\n");
+    return nil;
+  }
+}

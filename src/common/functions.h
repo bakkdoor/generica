@@ -3,5 +3,6 @@
 
 gobject* car(gobject *obj);
 gobject* cdr(gobject *obj);
+gobject* empty(gobject *obj);
 
 #endif /* _COMMON_FUNCTIONS_H_ */
