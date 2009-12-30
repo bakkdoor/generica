@@ -77,8 +77,11 @@ void print_object(gobject *obj, FILE *stream)
       break;
     case OBJ_CONS:
       fprintf(stream, "(");
-      print_object(obj->value.ccell.car, stream);
-      print_object(obj->value.ccell.cdr, stream);
+      if(empty(obj) == nil) {
+        print_object(obj->value.ccell.car, stream);
+        printf(" ");
+        print_object(obj->value.ccell.cdr, stream);
+      }
       fprintf(stream, ")");
     }
   }
