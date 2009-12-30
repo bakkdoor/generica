@@ -51,3 +51,26 @@ gobject* cons_obj(gobject *car, gobject *cdr)
   printf("ccell!\n");
   return obj;
 }
+
+void print_object(gobject *obj, FILE *stream)
+{
+  if(obj) {
+    switch(obj->type) {
+    case OBJ_INTEGER:
+      fprintf(stream, "%d", obj->value.intval);
+      break;
+    case OBJ_DOUBLE:
+      fprintf(stream, "%f", obj->value.doubleval);
+      break;
+    case OBJ_IDENTIFIER:
+    case OBJ_STRING:
+      fprintf(stream, "%s", obj->value.string);
+      break;
+    case OBJ_CONS:
+      fprintf(stream, "(");
+      print_object(obj->value.ccell.car, stream);
+      print_object(obj->value.ccell.cdr, stream);
+      fprintf(stream, ")");
+    }
+  }
+}

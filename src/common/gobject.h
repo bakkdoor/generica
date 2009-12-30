@@ -60,4 +60,7 @@ gobject* identifier_obj(char *val);
 
 gobject* cons_obj(gobject *car, gobject *cdr);
 
+void print_object(gobject *obj, FILE *stream);
+
+
 #endif /* _GOBJECT_H_ */

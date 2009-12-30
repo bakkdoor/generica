@@ -1,5 +1,3 @@
-/* main.c */
-
 #include "common/includes.h"
 #include "parser/includes.h"
 

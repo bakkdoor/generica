@@ -9,8 +9,3 @@ gobject* cdr(gobject *obj)
 {
   return obj;
 }
-
-gobject* eval(gobject *obj)
-{
-  return obj;
-}

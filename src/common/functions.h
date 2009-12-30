@@ -4,6 +4,4 @@
 gobject* car(gobject *obj);
 gobject* cdr(gobject *obj);
 
-gobject* eval(gobject *obj);
-
 #endif /* _COMMON_FUNCTIONS_H_ */
