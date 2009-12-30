@@ -2,7 +2,7 @@
 
 gobject* new_object(int type)
 {
-  gobject *obj = (gobject*)malloc(sizeof(struct gobject));
+  gobject *obj = (gobject*)malloc(sizeof(gobject));
   assert(obj);
   obj->type = type;
   return obj;
@@ -16,11 +16,11 @@ gobject* integer_obj(int val)
   return obj;
 }
 
-gobject* float_obj(float val)
+gobject* double_obj(double val)
 {
-  gobject *obj = new_object(OBJ_FLOAT);
-  obj->value.floatval = val;
-  printf("float: %f\n", val);
+  gobject *obj = new_object(OBJ_DOUBLE);
+  obj->value.doubleval = val;
+  printf("double: %lf\n", val);
   return obj;
 }
 

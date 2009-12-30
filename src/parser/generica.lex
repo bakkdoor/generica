@@ -9,7 +9,7 @@ digit		[0-9]
 letter          [A-Za-z]
 special         [-+?!_=*/^|><]
 int_lit 	-?{digit}+
-float_lit       -?{digit}*.{digit}+
+double_lit      -?{digit}*.{digit}+
 string_lit      \"[^\"\n]*\"
 lparen          \(
 rparen          \)
@@ -22,7 +22,7 @@ comment         ;[^\n]*
 %%
 
 {int_lit}	{ yylval.object = integer_obj(atoi(yytext)); return INTEGER_LITERAL; }
-{float_lit}     { yylval.object = float_obj(atof(yytext)); return (FLOAT_LITERAL); }
+{double_lit}    { yylval.object = double_obj(atof(yytext)); return (DOUBLE_LITERAL); }
 {string_lit}	{ yylval.object = string_obj(yytext); return STRING_LITERAL; }
 {lparen}        { return LPAREN; }
 {rparen}        { return RPAREN; }

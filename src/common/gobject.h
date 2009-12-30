@@ -2,15 +2,15 @@
 #define _GOBJECT_H_
 
 /* forward declaration */
-typedef struct gobject gobject;
+typedef struct gobject_t gobject;
 
 /* cons cell consists of car & cdr */
-typedef struct cons_cell {
+typedef struct cons_cell_t {
   struct gobject *car;
   struct gobject *cdr;
 } cons_cell;
 
-struct gobject {
+struct gobject_t {
   int type;
 
   union {
@@ -23,8 +23,8 @@ struct gobject {
     /* int value */
     int intval;
 
-    /* float value */
-    float floatval;
+    /* double value */
+    double doubleval;
     
     /* cons cell value */
     cons_cell ccell;
@@ -37,7 +37,7 @@ struct gobject {
 #define OBJ_NIL			0
 #define OBJ_T			1
 #define OBJ_INTEGER		10
-#define OBJ_FLOAT		11
+#define OBJ_DOUBLE		11
 #define OBJ_IDENTIFIER		12
 #define OBJ_STRING		13
 #define OBJ_CONS		20
@@ -51,7 +51,7 @@ gobject* new_object(int type);
 
 gobject* integer_obj(int val);
 
-gobject* float_obj(float val);
+gobject* double_obj(double val);
 
 gobject* string_obj(char *val);
 
