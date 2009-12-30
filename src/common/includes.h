@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <assert.h>
 
+#include "types.h"
 #include "gobject.h"
+#include "functions.h"
 
 #endif /* _COMMON_INCLUDES_H_ */

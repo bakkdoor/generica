@@ -5,6 +5,7 @@ gobject* new_object(int type)
   gobject *obj = (gobject*)malloc(sizeof(gobject));
   assert(obj);
   obj->type = type;
+  obj->quoted = false; /* default to false */
   return obj;
 }
 
@@ -20,7 +21,7 @@ gobject* double_obj(double val)
 {
   gobject *obj = new_object(OBJ_DOUBLE);
   obj->value.doubleval = val;
-  printf("double: %lf\n", val);
+  printf("double: %f\n", val);
   return obj;
 }
 
@@ -39,5 +40,14 @@ gobject* identifier_obj(char *val)
   obj->value.identifier = malloc(sizeof(strlen(val)));
   strcpy(obj->value.identifier, val);
   printf("ident: %s\n", val);
+  return obj;
+}
+
+gobject* cons_obj(gobject *car, gobject *cdr)
+{
+  gobject *obj = new_object(OBJ_CONS);
+  obj->value.ccell.car = car;
+  obj->value.ccell.cdr = cdr;
+  printf("ccell!\n");
   return obj;
 }

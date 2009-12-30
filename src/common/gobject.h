@@ -12,6 +12,7 @@ typedef struct cons_cell_t {
 
 struct gobject_t {
   int type;
+  bool quoted;
 
   union {
     /* identifier value */
@@ -56,5 +57,7 @@ gobject* double_obj(double val);
 gobject* string_obj(char *val);
 
 gobject* identifier_obj(char *val);
+
+gobject* cons_obj(gobject *car, gobject *cdr);
 
 #endif /* _GOBJECT_H_ */
