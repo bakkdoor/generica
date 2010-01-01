@@ -5,6 +5,8 @@ key_val_node* key_val_obj(gobject *key, gobject *val, key_val_node *next)
   key_val_node *node = malloc(sizeof(key_val_node));
 
   assert(node);
+  assert(key);
+  assert(val);
 
   node->key = key;
   node->val = val;
@@ -14,11 +16,26 @@ key_val_node* key_val_obj(gobject *key, gobject *val, key_val_node *next)
 
 hashtable* new_hash(key_val_node *key_val_list)
 {
+  unsigned int i;
+  hash_entry *entry;
+
   hashtable *ht = malloc(sizeof(hashtable));
   ht->entries = malloc(HASH_SIZE * sizeof(hash_entry));
 
   assert(ht);
   assert(ht->entries);
+
+  for(i = 0; i < HASH_SIZE; i++) {
+    ht->entries[i] = NULL;
+  }
+  
+  /* add key-value pairs to hashtable */
+  while(key_val_list) {
+    if(key_val_list->key && key_val_list->val) {
+      hash_add(ht, key_val_list->key, key_val_list->val);
+    }
+    key_val_list = key_val_list->next;
+  }
 
   return ht;
 }

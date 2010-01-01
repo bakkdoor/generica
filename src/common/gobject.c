@@ -85,8 +85,13 @@ void print_object(gobject *obj, FILE *stream)
       fprintf(stream, "%f", obj->value.doubleval);
       break;
     case OBJ_IDENTIFIER:
+      fprintf(stream, "%s", obj->value.identifier);
+      break;
     case OBJ_STRING:
       fprintf(stream, "%s", obj->value.string);
+      break;
+    case OBJ_HASH:
+      print_hash_obj(obj, stream);
       break;
     case OBJ_CONS:
       fprintf(stream, "(");
@@ -104,6 +109,30 @@ void print_object(gobject *obj, FILE *stream)
       }
       fprintf(stream, ")");
     }
+  }
+}
+
+void print_hash_obj(gobject *hash, FILE *stream)
+{
+  hash_entry *tmp;
+  unsigned int i;
+
+  if(hash && stream && hash->type == OBJ_HASH) {
+    fprintf(stream, "{");
+
+    for(i = 0; i < HASH_SIZE; i++) {
+      if(hash->value.hashval->entries[i]) {
+        for(tmp = hash->value.hashval->entries[i]; tmp; tmp = tmp->next) {
+          if(tmp->key && tmp->value) {
+            print_object(tmp->key, stream);
+            fprintf(stream, " => ");
+            print_object(tmp->value, stream);
+          }
+        }
+      }
+    }
+
+    fprintf(stream, "}");
   }
 }
 

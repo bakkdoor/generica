@@ -72,6 +72,8 @@ gobject* cons_obj(gobject *car, gobject *cdr);
 
 void print_object(gobject *obj, FILE *stream);
 
+void print_hash_obj(gobject *hash, FILE *stream);
+
 bool ccell_equals(cons_cell a, cons_cell b);
 
 #endif /* _GOBJECT_H_ */

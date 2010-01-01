@@ -73,8 +73,12 @@ atom:           INTEGER_LITERAL	{ $$ = $1; }
 hash_literal: LCURLY key_value_list RCURLY { $$ = hash_obj($2) };
 
 key_value_list: SYMBOL_LITERAL ARROW sexp { $$ = key_val_obj($1, $3, NULL); }
+                | SYMBOL_LITERAL ARROW atom { $$ = key_val_obj($1, $3, NULL); }
                 | SYMBOL_LITERAL ARROW sexp key_value_list { 
                   $$ = key_val_obj($1, $3, $4); 
+                }
+                | SYMBOL_LITERAL ARROW atom key_value_list { 
+                  $$ = key_val_obj($1, $3, $4);
                 };
 
 %%
