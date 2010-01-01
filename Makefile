@@ -5,7 +5,7 @@ generica:
 
 test: generica
 	clear
-	bin/generica
+	bin/generica spec/spec.gna
 clean:
 	cd src && make clean > /dev/null
 	rm -f bin/*
