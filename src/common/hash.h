@@ -1,10 +1,23 @@
 #ifndef _HASH_H_
 #define _HASH_H_
 
-#define HASH_SIZE 128
-struct gobject_t;
-/*typedef struct gobject_t gobject;*/
+/**
+ * This file contains a simple, yet useful hashtable implementation
+ * used for the hash objects within generica.
+ */
 
+/**
+ * Size of different hashtable key values.
+ */
+#define HASH_SIZE 128
+
+/* forward declaration */
+struct gobject_t;
+
+/**
+ * Key value pair node used for key value pair lists for constructing
+ * hashtables in the parser.
+ */
 typedef struct key_val_node_s {
   struct gobject_t *key;
   struct gobject_t *val;
@@ -17,6 +30,9 @@ typedef struct hash_entry_s {
   struct hash_entry_s *next;
 } hash_entry;
 
+/**
+   Hashtable structure. Holds array of list of hash entries.
+ */
 typedef struct hashtable_s {
   hash_entry **entries;
 } hashtable;
