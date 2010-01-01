@@ -17,7 +17,6 @@ key_val_node* key_val_obj(gobject *key, gobject *val, key_val_node *next)
 hashtable* new_hash(key_val_node *key_val_list)
 {
   unsigned int i;
-  hash_entry *entry;
 
   hashtable *ht = malloc(sizeof(hashtable));
   ht->entries = malloc(HASH_SIZE * sizeof(hash_entry));
