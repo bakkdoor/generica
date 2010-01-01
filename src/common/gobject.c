@@ -68,7 +68,7 @@ gobject* hash_obj(key_val_node *key_val_list)
   assert(obj);
   assert(hash);
 
-  obj->value.hash_val = hash;
+  obj->value.hashval = hash;
   debug("new hash");
 
   return obj;
@@ -107,15 +107,11 @@ void print_object(gobject *obj, FILE *stream)
   }
 }
 
-bool ccell_equals(cons_cell *a, cons_cell *b)
+bool ccell_equals(cons_cell a, cons_cell b)
 {
-  if(a && b) {
-    if(obj_equals(a->car, b->car) == t
-       && obj_equals(a->cdr, b->cdr) == t) {
-      return true;
-    }
-    return false;
-  } else {
-    return false;
+  if(obj_equals(a.car, b.car) == t
+     && obj_equals(a.cdr, b.cdr) == t) {
+    return true;
   }
+  return false;
 }
