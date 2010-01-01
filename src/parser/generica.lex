@@ -9,7 +9,7 @@ digit		[0-9]
 letter          [A-Za-z]
 special         [-+?!_=*/^|><]
 int_lit 	-?{digit}+
-double_lit      -?{digit}+.{digit}+
+double_lit      {int_lit}\.{digit}+
 string_lit      \"[^\"\n]*\"
 lparen          \(
 rparen          \)
@@ -18,6 +18,9 @@ delimiter       [ \n\r\t\(\)]
 identifier      ({letter}|{digit}|{special})+
 symbol_lit      :{identifier}
 comment         ;[^\n]*
+lcurly          "{"
+rcurly          "}"
+arrow           "=>"
 
 %%
 
@@ -29,6 +32,9 @@ comment         ;[^\n]*
 {quoteparen}    { return QUOTEPAREN; }
 {identifier}    { yylval.object = identifier_obj(yytext); return IDENTIFIER; }
 {symbol_lit}    { yylval.object = identifier_obj(yytext); return SYMBOL_LITERAL; }
+{lcurly}        { return LCURLY; }
+{rcurly}        { return RCURLY; }
+{arrow}         { return ARROW; }
 
 {comment}       {}
 

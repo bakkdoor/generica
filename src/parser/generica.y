@@ -7,6 +7,7 @@ int yylex(void);
 
 %union{
   gobject*   object;
+  key_val_node *key_val_list;
 }
 
 %start	programm
@@ -14,6 +15,9 @@ int yylex(void);
 %token                  LPAREN
 %token                  RPAREN
 %token                  QUOTEPAREN
+%token                  LCURLY
+%token                  RCURLY
+%token                  ARROW
 
 %token <object>         INTEGER_LITERAL
 %token <object>         DOUBLE_LITERAL
@@ -21,46 +25,57 @@ int yylex(void);
 %token <object>         SYMBOL_LITERAL
 %token <object>         IDENTIFIER
 %type  <object>         atom
-%type  <object>         list
+%type  <object>         hash_literal
+%type  <key_val_list>   key_value_list
+
 %type  <object>         empty_list
-%type  <object>         quoted_list
+%type  <object>         empty_quote
 %type  <object>         sexp
 %type  <object>         sexp_list
 
 %%
 
 programm:       /* empty */
-                | programm sexp { eval($2) }
+                | programm sexp { print_object(eval($2), stdout); printf("\n"); }
                 ;
 
-sexp:           atom
-                | list
-                ;
-list:           empty_list
+sexp:           empty_list
+                | empty_quote
                 | LPAREN sexp_list RPAREN { 
                     $$ = cons_obj(car($2), cdr($2));
-                  }
-                | quoted_list;
+                }
+                | QUOTEPAREN sexp_list RPAREN {
+                    $$ = cons_obj(car($2), cdr($2));
+                };
 
+empty_list:     LPAREN RPAREN { 
+                    $$ = cons_obj(NULL, NULL); 
+                };
 
-empty_list:     LPAREN RPAREN { $$ = cons_obj(NULL, NULL); }
-                | QUOTEPAREN RPAREN { $$ = cons_obj(NULL, NULL); };
-
-quoted_list:    QUOTEPAREN sexp RPAREN { 
-                    gobject *obj = cons_obj(car($2), cdr($2));
+empty_quote:    QUOTEPAREN RPAREN { 
+                    gobject *obj = cons_obj(NULL, NULL);
                     obj->quoted = true;
                     $$ = obj;
                 };
 
-sexp_list:      sexp { $$ = $1 }
-                | sexp_list sexp;
+sexp_list:      /* empty */ { $$ = nil }
+                | sexp sexp_list { $$ = cons_obj($1, $2); }
+                | atom sexp_list { $$ = cons_obj($1, $2); };
 
 atom:           INTEGER_LITERAL	{ $$ = $1; }
                 | DOUBLE_LITERAL { $$ = $1; }
                 | STRING_LITERAL { $$ = $1; }
                 | SYMBOL_LITERAL { $$ = $1; }
                 | IDENTIFIER { $$ = $1; }
+                | hash_literal { $$ = $1}
                 ;
+
+hash_literal: LCURLY key_value_list RCURLY { $$ = hash_obj($2) };
+
+key_value_list: SYMBOL_LITERAL ARROW sexp { $$ = key_val_obj($1, $3, NULL); }
+                | SYMBOL_LITERAL ARROW sexp key_value_list { 
+                  $$ = key_val_obj($1, $3, $4); 
+                };
 
 %%
 

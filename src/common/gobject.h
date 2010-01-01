@@ -26,6 +26,8 @@ struct gobject_t {
 
     /* double value */
     double doubleval;
+
+    hashtable *hash_val;
     
     /* cons cell value */
     cons_cell ccell;
@@ -41,6 +43,7 @@ struct gobject_t {
 #define OBJ_DOUBLE		11
 #define OBJ_IDENTIFIER		12
 #define OBJ_STRING		13
+#define OBJ_HASH		14
 #define OBJ_CONS		20
 
 
@@ -62,6 +65,8 @@ gobject* double_obj(double val);
 gobject* string_obj(char *val);
 
 gobject* identifier_obj(char *val);
+
+gobject* hash_obj(key_val_node *key_val_list);
 
 gobject* cons_obj(gobject *car, gobject *cdr);
 

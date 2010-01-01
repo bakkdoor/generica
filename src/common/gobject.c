@@ -22,7 +22,7 @@ gobject* integer_obj(int val)
 {
   gobject *obj = new_object(OBJ_INTEGER);
   obj->value.intval = val;
-  printf("int: %d\n", val);
+  debug("int: %d", val);
   return obj;
 }
 
@@ -30,7 +30,7 @@ gobject* double_obj(double val)
 {
   gobject *obj = new_object(OBJ_DOUBLE);
   obj->value.doubleval = val;
-  printf("double: %f\n", val);
+  debug("double: %f", val);
   return obj;
 }
 
@@ -39,7 +39,7 @@ gobject* string_obj(char *val)
   gobject *obj = new_object(OBJ_STRING);
   obj->value.string = malloc(sizeof(strlen(val)));
   strcpy(obj->value.string, val);
-  printf("string: %s\n", val);
+  debug("string: %s", val);
   return obj;
 }
 
@@ -48,7 +48,7 @@ gobject* identifier_obj(char *val)
   gobject *obj = new_object(OBJ_IDENTIFIER);
   obj->value.identifier = malloc(sizeof(strlen(val)));
   strcpy(obj->value.identifier, val);
-  printf("ident: %s\n", val);
+  debug("ident: %s", val);
   return obj;
 }
 
@@ -57,7 +57,13 @@ gobject* cons_obj(gobject *car, gobject *cdr)
   gobject *obj = new_object(OBJ_CONS);
   obj->value.ccell.car = car;
   obj->value.ccell.cdr = cdr;
-  printf("ccell!\n");
+  return obj;
+}
+
+gobject* hash_obj(key_val_node *key_val_list)
+{
+  gobject *obj= new_object(OBJ_HASH);
+  hashtable *hash = new_hash(key_val_list);
   return obj;
 }
 
@@ -78,9 +84,16 @@ void print_object(gobject *obj, FILE *stream)
     case OBJ_CONS:
       fprintf(stream, "(");
       if(empty(obj) == nil) {
-        print_object(obj->value.ccell.car, stream);
-        printf(" ");
-        print_object(obj->value.ccell.cdr, stream);
+        gobject *curr_cons = obj;
+        while(curr_cons != nil) {
+          print_object(car(curr_cons), stream);          
+          curr_cons = cdr(curr_cons);
+
+          /* skip last space before end of list */
+          if(curr_cons != nil) {
+            fprintf(stream, " ");
+          }
+        }
       }
       fprintf(stream, ")");
     }
