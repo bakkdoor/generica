@@ -33,5 +33,7 @@ bool hash_add(hashtable *ht, struct gobject_t *key, struct gobject_t *value);
 hash_entry* hash_lookup(hashtable *ht, struct gobject_t *value);
 bool hash_includes(hashtable *ht, struct gobject_t *value);
 bool hash_remove(hashtable *ht, struct gobject_t *value);
+bool hash_equals(hashtable *a, hashtable *b);
+bool hash_entries_equal(hash_entry *a, hash_entry *b);
 
 #endif /* _HASH_H_ */

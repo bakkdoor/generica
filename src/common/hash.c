@@ -138,8 +138,8 @@ bool hash_includes(hashtable *ht, gobject *value)
 
 bool hash_remove(hashtable *ht, gobject *key)
 {
-  unsigned int hashval = hash_val(ht, key);
-  ht_entry *current, *last;
+  unsigned int hashval = hash_val(key);
+  hash_entry *current, *last;
   current = ht->entries[hashval];
   last = current;
   for(; current; current = current->next) {
@@ -153,4 +153,53 @@ bool hash_remove(hashtable *ht, gobject *key)
   }
   
   return false; 
+}
+
+bool hash_equals(hashtable *a, hashtable *b)
+{
+  unsigned int i;
+
+  if(a && b) {
+
+    for(i = 0; i < HASH_SIZE; i++) {
+      if(!hash_entries_equal(a->entries[i], b->entries[i])) {
+        return false;
+      }
+    }
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool hash_entries_equal(hash_entry *a, hash_entry *b)
+{
+  hash_entry *tmp_a, *tmp_b;
+
+  if(a && b) {
+
+    tmp_a = a;
+    tmp_b = b;
+
+    while(tmp_a && tmp_b) {
+      if(obj_equals(tmp_a->key, tmp_b->key) != t
+         || obj_equals(tmp_a->value, tmp_b->value) != t) {
+        return false;
+      }
+      tmp_a = tmp_a->next;
+      tmp_b = tmp_b->next;
+    }
+
+    /* one list has ended before the other one -> false */
+    if(!(tmp_a->next && tmp_b->next))
+      return false;
+
+    /* otherwise, we should have the same lists */
+    return true;
+  } else {
+    if(!a && !b)
+      return true;
+
+    return false;
+  }
 }
