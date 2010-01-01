@@ -1,7 +1,7 @@
 cc = gcc
 cc_flags = -g -Wall -ansi -pedantic
 
-files = common/gobject common/functions common/eval common/utils common/hash parser/lex parser/bison main
+files = common/gobject common/functions common/scope common/eval common/utils common/hash parser/lex parser/bison main
 src_files = $(foreach file, $(files), $(file).c)
 obj_files = $(foreach file, $(files), $(file).o)
 build_cmd =  $(cc) $(cc_flags) -c $(file).c -o $(file).o

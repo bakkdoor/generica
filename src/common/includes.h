@@ -14,6 +14,7 @@
 #include "hash.h"
 #include "gobject.h"
 #include "functions.h"
+#include "scope.h"
 #include "eval.h"
 #include "utils.h"
 

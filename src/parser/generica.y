@@ -3,6 +3,7 @@
 
 int yyerror(char *s);
 int yylex(void);
+extern scope *global_scope;
 %}
 
 %union{
@@ -36,7 +37,7 @@ int yylex(void);
 %%
 
 programm:       /* empty */
-                | programm sexp { print_object(eval($2), stdout); printf("\n"); }
+                | programm sexp { print_object(eval($2, global_scope), stdout); printf("\n"); }
                 ;
 
 sexp:           empty_list
