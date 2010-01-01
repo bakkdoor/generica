@@ -8,6 +8,13 @@
  */
 
 typedef struct scope_s scope;
+typedef struct builtin_s builtin;
+
+struct builtin_s {
+  char *identifier;
+  gobject* (*func)(gobject* args);
+  builtin *next;
+};
 
 /**
  * A scope contains a hashtable, in which all identifiers etc. are
@@ -17,9 +24,22 @@ typedef struct scope_s scope;
  * (the scope, in which the function is defined).
  */
 struct scope_s {
+  builtin *builtins;
   hashtable *scope_ht;
   scope *parent;
 };
+
+/**
+ * Global scope defined in src/main.c
+ */
+extern scope *global_scope;
+
+/**
+ * Sets up the global scope with predefined functions etc.
+ */
+void init_global_scope();
+
+void scope_define_builtin(scope *sc, char *ident, gobject* (*func)(gobject* args));
 
 /**
  * Creates a new scope with a given parent scope.

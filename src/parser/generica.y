@@ -3,7 +3,6 @@
 
 int yyerror(char *s);
 int yylex(void);
-extern scope *global_scope;
 %}
 
 %union{

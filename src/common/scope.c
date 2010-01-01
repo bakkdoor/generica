@@ -1,5 +1,33 @@
 #include "includes.h"
 
+void init_global_scope()
+{
+  /* init to NULL */
+  global_scope->builtins = NULL;
+
+  /* scope_define_builtin("define", define); */
+  scope_define_builtin(global_scope, "car", car);
+  scope_define_builtin(global_scope, "cdr", cdr);
+  scope_define_builtin(global_scope, "empty", empty);
+}
+
+void scope_define_builtin(scope *sc, char *ident, gobject* (*func)(gobject* args))
+{
+  builtin *new_b = malloc(sizeof(builtin));
+  builtin *tmp;
+
+  assert(new_b);
+  assert(ident);
+  assert(func);
+
+  new_b->identifier = ident;
+  new_b->func = func;
+
+  tmp = sc->builtins;
+  new_b->next = tmp;
+  sc->builtins = new_b;
+}
+
 scope* new_scope(scope *parent)
 {
   scope *sc = malloc(sizeof(scope));
