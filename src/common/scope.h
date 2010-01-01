@@ -21,7 +21,22 @@ struct scope_s {
   scope *parent;
 };
 
+/**
+ * Creates a new scope with a given parent scope.
+ * @param parent The parent scope of the new scope. Can be NULL, if no
+ * parent exists.
+ * @return The newly created scope.
+ */
 scope* new_scope(scope *parent);
+
+/**
+ * Looks for an identifier and returns the corresponding object, if in
+ * scope (or in parent scope, if a parent is set).
+ * @param sc Scope in which to look for identifier.
+ * @param identifier The object, that is the identifier.
+ * @return The (value) object represented by the identifier within the
+ * scope
+ */
 gobject* scope_get_ident(scope *sc, gobject *identifier);
 
 #endif /* _SCOPE_H_ */
