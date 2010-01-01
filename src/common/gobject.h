@@ -27,7 +27,7 @@ struct gobject_t {
     /* double value */
     double doubleval;
 
-    hashtable *hash_val;
+    hashtable *hashval;
     
     /* cons cell value */
     cons_cell ccell;
@@ -72,5 +72,6 @@ gobject* cons_obj(gobject *car, gobject *cdr);
 
 void print_object(gobject *obj, FILE *stream);
 
+bool ccell_equals(cons_cell *a, cons_cell *b);
 
 #endif /* _GOBJECT_H_ */
