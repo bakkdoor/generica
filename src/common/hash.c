@@ -147,9 +147,9 @@ hash_entry* hash_lookup(hashtable *ht, gobject *key)
   return NULL;
 }
 
-bool hash_includes(hashtable *ht, gobject *value)
+bool hash_includes(hashtable *ht, gobject *key)
 {
-  return (hash_lookup(ht, value) != NULL);
+  return (hash_lookup(ht, key) != NULL);
 }
 
 bool hash_remove(hashtable *ht, gobject *key)
