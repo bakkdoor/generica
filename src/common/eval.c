@@ -29,10 +29,37 @@ gobject* eval_identifier(gobject *obj, scope *sc)
     print_object(val, stdout);
     printf("\n");
   }
+  return val;
 }
 
 gobject* eval_cons(gobject *obj, scope *sc)
 {
   /* TODO: fix this! */
-  return eval(car(obj), sc);
+  /* return eval(car(obj), sc); */
+  switch(car(obj)->type) {
+  case OBJ_IDENTIFIER:
+    /* handle funcall */
+    if(obj->quoted == false) {
+      return eval_funcall(car(obj), cdr(obj), sc);
+    }
+  }
+}
+
+gobject* eval_funcall(gobject *func_ident, gobject *args, scope *sc)
+{
+  builtin *bi;
+  gobject *func_obj;
+
+  assert(func_ident);
+  assert(args);
+  assert(sc);
+
+  bi = scope_get_builtin(sc, func_ident->value.identifier);
+  if(bi) {
+    return bi->func(car(args));
+  } else {
+    func_obj = scope_get_ident(sc, func_ident);
+    /* TODO: to actual eval of function */
+    return func_obj;
+  }
 }

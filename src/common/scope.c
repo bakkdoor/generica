@@ -49,3 +49,14 @@ gobject* scope_get_ident(scope *sc, gobject *identifier)
     return nil;
   }
 }
+
+builtin* scope_get_builtin(scope *sc, char *identifier)
+{
+  builtin *tmp;
+  for(tmp = sc->builtins; tmp; tmp = tmp->next) {
+    if(strcmp(tmp->identifier, identifier) == 0) {
+      return tmp;
+    }
+  }
+  return NULL;
+}

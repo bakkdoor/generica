@@ -78,6 +78,12 @@ void print_object(gobject *obj, FILE *stream)
 {
   if(obj) {
     switch(obj->type) {
+    case OBJ_NIL:
+      fprintf(stream, "nil");
+      break;
+    case OBJ_T:
+      fprintf(stream, "t");
+      break;
     case OBJ_INTEGER:
       fprintf(stream, "%d", obj->value.intval);
       break;

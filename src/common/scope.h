@@ -59,4 +59,6 @@ scope* new_scope(scope *parent);
  */
 gobject* scope_get_ident(scope *sc, gobject *identifier);
 
+builtin* scope_get_builtin(scope *sc, char *identifier);
+
 #endif /* _SCOPE_H_ */

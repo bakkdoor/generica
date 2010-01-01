@@ -5,11 +5,14 @@ gobject* car(gobject *obj)
   if(obj) {
     switch(obj->type) {
     case OBJ_CONS:
-      return obj->value.ccell.car;
+      if(obj->value.ccell.car)
+        return obj->value.ccell.car;
+      break;
     default:
       warn("Warning: calling 'car' on non-list object!\n");
       return nil;
     }
+    return nil;
   }
   return nil;
 }
@@ -19,11 +22,14 @@ gobject* cdr(gobject *obj)
   if(obj) {
     switch(obj->type) {
     case OBJ_CONS:
-      return obj->value.ccell.cdr;
+      if(obj->value.ccell.cdr)
+        return obj->value.ccell.cdr;
+      break;
     default:
       warn("Warning: calling 'cdr' on non-list object!\n");
       return nil;
     }
+    return nil;
   }
   return nil;
 }
