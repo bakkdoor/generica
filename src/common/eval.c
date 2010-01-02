@@ -66,13 +66,13 @@ gobject* eval_funcall(gobject *func_ident, gobject *args, scope *sc)
     } else if(bi->n_args > 1) {
       /* handle multiple-argument built-in function by passing it all
          arguments as a list */
-      if(!args->quoted) {
+      if(!args->quoted && !bi->special) {
         val = bi->func(eval(args, sc), sc);
       } else {
         val = bi->func(args, sc);
       }
     } else {
-      if(!car(args, sc)->quoted) {
+      if(!car(args, sc)->quoted && !bi->special) {
         val = bi->func(eval(car(args, sc), sc), sc);
       } else {
         val = bi->func(car(args, sc), sc);
