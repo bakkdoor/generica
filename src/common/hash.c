@@ -106,8 +106,7 @@ bool hash_add(hashtable *ht, gobject *key, gobject *value)
       for(; curr_entry; curr_entry = curr_entry->next) {
         last_entry = curr_entry;
 
-        /* TODO: make this something like: if(obj_equals(key, curr_entry->key) */
-        if(key == curr_entry->key) {
+        if(obj_equals(key, curr_entry->key) != nil) {
           curr_entry->value = value;
           return false;
         }
@@ -138,8 +137,7 @@ hash_entry* hash_lookup(hashtable *ht, gobject *key)
 
   for(current = ht->entries[hashval]; 
       current; current = current->next) {
-    /* TODO: make this something like: if(obj_equals(key, current->key) */
-    if(key == current->key) {
+    if(obj_equals(key, current->key) != nil) {
       return current;
     }
   }
@@ -159,8 +157,7 @@ bool hash_remove(hashtable *ht, gobject *key)
   current = ht->entries[hashval];
   last = current;
   for(; current; current = current->next) {
-    /* TODO: make this something like: if(obj_equals(key, current->key) */
-    if(key == current->key) {
+    if(obj_equals(key, current->key) != nil) {
       last->next = current->next;
       free(current);
       return true;
