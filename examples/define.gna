@@ -1,0 +1,5 @@
+(define x 3)
+(define y 4)
+(println x)
+(println y)
+(println (+ x y))

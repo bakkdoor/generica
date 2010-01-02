@@ -1,0 +1,15 @@
+(if (= 3 3)
+    (println "equal!")
+  (println "not equal!"))
+
+(if (= 3 4)
+    (println "equal!")
+  (println "not equal!"))
+
+(unless (= 3 3)
+  (println "not equal!")
+  (println "equal!"))    
+  
+(unless (= 3 4)
+  (println "not equal!")
+  (println "equal!"))
