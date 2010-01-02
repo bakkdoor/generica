@@ -37,13 +37,13 @@ gobject* cdr(gobject *obj)
 gobject* empty(gobject *obj)
 {
   if(obj && obj->type == OBJ_CONS) {
-    if(!obj->value.ccell.car) {
+    if(!obj->value.ccell.car || obj->value.ccell.car == nil) {
       return t;
     } else {
       return nil;
     }
   } else {
-    warn("Calling 'empty' on non-list object!\n");
+    warn("Calling 'empty' on non-list object!");
     return nil;
   }
 }
@@ -99,5 +99,12 @@ gobject* obj_equals(gobject *a, gobject *b)
 gobject* print_object_stdout(gobject *obj)
 {
   print_object(eval(obj, global_scope), stdout);
+  return nil;
+}
+
+gobject* println_object_stdout(gobject *obj)
+{
+  print_object(eval(obj, global_scope), stdout);
+  printf("\n");
   return nil;
 }
