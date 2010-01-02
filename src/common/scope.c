@@ -9,6 +9,7 @@ void init_global_scope()
   scope_define_builtin(global_scope, "car", car);
   scope_define_builtin(global_scope, "cdr", cdr);
   scope_define_builtin(global_scope, "empty", empty);
+  scope_define_builtin(global_scope, "print", print_object_stdout);
 }
 
 void scope_define_builtin(scope *sc, char *ident, gobject* (*func)(gobject* args))

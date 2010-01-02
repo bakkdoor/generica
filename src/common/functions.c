@@ -95,3 +95,9 @@ gobject* obj_equals(gobject *a, gobject *b)
   }
   return nil;
 }
+
+gobject* print_object_stdout(gobject *obj)
+{
+  print_object(eval(obj, global_scope), stdout);
+  return nil;
+}

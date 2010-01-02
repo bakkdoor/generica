@@ -35,4 +35,6 @@ gobject* empty(gobject *obj);
  */
 gobject* obj_equals(gobject *a, gobject *b);
 
+gobject* print_object_stdout(gobject *obj);
+
 #endif /* _COMMON_FUNCTIONS_H_ */

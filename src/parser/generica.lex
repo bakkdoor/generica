@@ -13,7 +13,7 @@ double_lit      {int_lit}\.{digit}+
 string_lit      \"[^\"\n]*\"
 lparen          \(
 rparen          \)
-quoteparen      '\(
+quoteparen      \'\(
 lcurly          "{"
 rcurly          "}"
 arrow           "=>"

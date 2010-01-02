@@ -45,15 +45,17 @@ sexp:           empty_list
                     $$ = cons_obj(car($2), cdr($2));
                 }
                 | QUOTEPAREN sexp_list RPAREN {
-                    $$ = cons_obj(car($2), cdr($2));
+                    gobject *obj = cons_obj(car($2), cdr($2));
+                    obj->quoted = true;
+                    $$ = obj;
                 };
 
 empty_list:     LPAREN RPAREN { 
-                    $$ = cons_obj(NULL, NULL); 
+                    $$ = cons_obj(nil, nil); 
                 };
 
 empty_quote:    QUOTEPAREN RPAREN { 
-                    gobject *obj = cons_obj(NULL, NULL);
+                    gobject *obj = cons_obj(nil, nil);
                     obj->quoted = true;
                     $$ = obj;
                 };
