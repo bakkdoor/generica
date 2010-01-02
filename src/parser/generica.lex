@@ -26,7 +26,12 @@ comment         ;[^\n]*
 
 {int_lit}	{ yylval.object = integer_obj(atoi(yytext)); return INTEGER_LITERAL; }
 {double_lit}    { yylval.object = double_obj(atof(yytext)); return (DOUBLE_LITERAL); }
-{string_lit}	{ yylval.object = string_obj(yytext); return STRING_LITERAL; }
+{string_lit}	{ 
+                  char *str = malloc(strlen(yytext) - 2); 
+                  strncpy(str, yytext + 1, strlen(yytext) - 2);
+                  yylval.object = string_obj(str); 
+                  return STRING_LITERAL; 
+                }
 {lparen}        { return LPAREN; }
 {rparen}        { return RPAREN; }
 {lcurly}        { return LCURLY; }
