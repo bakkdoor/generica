@@ -1,0 +1,26 @@
+(println '(+ 3 4))
+(println (+ 3 4))
+
+(println '(+ 3.5 4.2))
+(println (+ 3.5 4.2))
+
+(println '(- 3 4))
+(println (- 3 4))
+
+(println '(- 3.5 4.2))
+(println (- 3.5 4.2))
+
+(println '(* 3 4))
+(println (* 3 4))
+
+(println '(* 3.5 4.2))
+(println (* 3.5 4.2))
+
+(println '(/ 3 4))
+(println (/ 3 4))
+
+(println '(/ 3.5 4.2))
+(println (/ 3.5 4.2))
+
+(println '(/ 9 3))
+(println (/ 9 3))
