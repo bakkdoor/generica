@@ -36,7 +36,7 @@ int yylex(void);
 %%
 
 programm:       /* empty */
-                | programm sexp { print_object(eval($2, global_scope), stdout); printf("\n"); }
+                | programm sexp { eval($2, global_scope); }
                 ;
 
 sexp:           empty_list
