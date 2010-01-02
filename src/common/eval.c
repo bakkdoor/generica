@@ -34,18 +34,24 @@ gobject* eval_identifier(gobject *obj, scope *sc)
 
 gobject* eval_cons(gobject *obj, scope *sc)
 {
-  /* TODO: fix this! */
-  /* return eval(car(obj), sc); */
-  switch(car(obj)->type) {
-  case OBJ_IDENTIFIER:
-    /* handle funcall */
-    if(obj->quoted == false) {
-      return eval_funcall(car(obj), cdr(obj), sc);
-    } else {
+  if(obj->type == OBJ_CONS) {
+    /* TODO: fix this! */
+    /* return eval(car(obj), sc); */
+    switch(car(obj)->type) {
+    case OBJ_IDENTIFIER:
+      /* handle funcall */
+      if(obj->quoted == false) {
+        return eval_funcall(car(obj), cdr(obj), sc);
+      } else {
+        return obj;
+      }
+      break;
+    default:
       return obj;
     }
+  } else {
+    return nil;
   }
-  return nil;
 }
 
 gobject* eval_funcall(gobject *func_ident, gobject *args, scope *sc)
@@ -65,7 +71,9 @@ gobject* eval_funcall(gobject *func_ident, gobject *args, scope *sc)
     } else {
       val = bi->func(car(args));
     }
+
     assert(val);
+
     return val;
   } else {
     func_obj = scope_get_ident(sc, func_ident);
