@@ -41,4 +41,10 @@ gobject* multiply(gobject *args, scope *sc);
 
 gobject* divide(gobject *args, scope *sc);
 
+gobject* if_f(gobject *args, scope *sc);
+
+gobject* unless(gobject *args, scope *sc);
+
+gobject* define(gobject *args, scope *sc);
+
 #endif /* _COMMON_FUNCTIONS_H_ */

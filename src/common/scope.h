@@ -14,6 +14,7 @@ struct builtin_s {
   char *identifier;
   gobject* (*func)(gobject* args, scope *sc);
   unsigned int n_args;
+  bool special;
   builtin *next;
 };
 
@@ -42,6 +43,8 @@ void init_global_scope();
 
 void scope_define_builtin(scope *sc, char *ident, gobject* (*func)(gobject* args, scope *sc), unsigned int n_args);
 
+void scope_define_builtin_special(scope *sc, char *ident, gobject* (*func)(gobject* args, scope *sc), unsigned int n_args);
+
 /**
  * Creates a new scope with a given parent scope.
  * @param parent The parent scope of the new scope. Can be NULL, if no
@@ -61,5 +64,7 @@ scope* new_scope(scope *parent);
 gobject* scope_get_ident(scope *sc, gobject *identifier);
 
 builtin* scope_get_builtin(scope *sc, char *identifier);
+
+bool scope_define(scope *sc, gobject *identifier, gobject *value);
 
 #endif /* _SCOPE_H_ */

@@ -190,3 +190,35 @@ gobject* divide(gobject *args, scope *sc)
     return double_obj(val);
   }
 }
+
+gobject* if_f(gobject *args, scope *sc)
+{
+  gobject *cond = eval(car(args, sc), sc);
+
+  if(cond != nil) {
+    return eval(car(cdr(args, sc), sc), sc);  
+  } else {
+    return eval(car(cdr(cdr(args, sc), sc), sc), sc);
+  }
+}
+
+gobject* unless(gobject *args, scope *sc)
+{
+  gobject *cond = eval(car(args, sc), sc);
+
+  if(cond == nil) {
+    return eval(car(cdr(args, sc), sc), sc);  
+  } else {
+    return eval(car(cdr(cdr(args, sc), sc), sc), sc);
+  }
+}
+
+gobject* define(gobject *args, scope *sc)
+{
+  gobject *ident = car(args, sc);
+  gobject *value = eval(car(cdr(args, sc), sc), sc);
+  
+  scope_define(sc, ident, value);
+  
+  return value;
+}
