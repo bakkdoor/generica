@@ -139,4 +139,12 @@ void print_hash_obj(gobject *hash, FILE *stream);
  */
 bool ccell_equals(cons_cell a, cons_cell b);
 
+/**
+ * Indicates, two given objects are equal in value.
+ * @param a First object.
+ * @param b Second object.
+ * @return t if equal, nil otherwise.
+ */
+gobject* obj_equals(gobject *a, gobject *b);
+
 #endif /* _GOBJECT_H_ */

@@ -27,17 +27,11 @@ gobject* cdr(gobject *obj);
  */
 gobject* empty(gobject *obj);
 
-/**
- * Indicates, two given objects are equal in value.
- * @param a First object.
- * @param b Second object.
- * @return t if equal, nil otherwise.
- */
-gobject* obj_equals(gobject *a, gobject *b);
-
 gobject* print_object_stdout(gobject *obj);
 
 gobject* println_object_stdout(gobject *obj);
+
+gobject* equal(gobject *args);
 
 gobject* add(gobject *args);
 

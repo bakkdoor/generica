@@ -150,3 +150,51 @@ bool ccell_equals(cons_cell a, cons_cell b)
   }
   return false;
 }
+
+gobject* obj_equals(gobject *a, gobject *b)
+{
+  assert(a);
+  assert(b);
+
+  if(a->type != b->type) {
+    return nil;
+  }
+
+  switch(a->type) {
+  case OBJ_NIL:
+    return t;
+
+  case OBJ_T:
+    return t;
+
+  case OBJ_INTEGER:
+    return (a->value.intval == b->value.intval) ? t : nil;
+
+  case OBJ_DOUBLE:
+    return (a->value.doubleval == b->value.doubleval) ? t : nil;
+
+  case OBJ_IDENTIFIER:
+    if(strcmp(a->value.identifier, b->value.identifier) == 0)
+      return t;
+    break;
+
+  case OBJ_STRING:
+    if(strcmp(a->value.string, b->value.string) == 0)
+      return t;
+    break;
+
+  case OBJ_HASH:
+    if(hash_equals(a->value.hashval, b->value.hashval))
+      return t;
+    break;
+
+  case OBJ_CONS:
+    if(ccell_equals(a->value.ccell, b->value.ccell))
+      return t;
+    break;
+
+  default:
+    return nil;
+  }
+  return nil;
+}

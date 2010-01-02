@@ -11,6 +11,7 @@ void init_global_scope()
   scope_define_builtin(global_scope, "empty", empty, 1);
   scope_define_builtin(global_scope, "print", print_object_stdout, 1);
   scope_define_builtin(global_scope, "println", println_object_stdout, 1);
+  scope_define_builtin(global_scope, "=", equal, 2);
   scope_define_builtin(global_scope, "+", add, 2);
   scope_define_builtin(global_scope, "-", subtract, 2);
   scope_define_builtin(global_scope, "*", multiply, 2);
