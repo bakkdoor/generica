@@ -15,6 +15,7 @@ int main(int argc, char **argv)
   }
   
   global_scope = new_scope(NULL);
+  init_global_objects();
   init_global_scope();
   
   yyparse();
