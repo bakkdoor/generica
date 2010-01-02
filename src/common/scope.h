@@ -13,6 +13,7 @@ typedef struct builtin_s builtin;
 struct builtin_s {
   char *identifier;
   gobject* (*func)(gobject* args);
+  unsigned int n_args;
   builtin *next;
 };
 
@@ -39,7 +40,7 @@ extern scope *global_scope;
  */
 void init_global_scope();
 
-void scope_define_builtin(scope *sc, char *ident, gobject* (*func)(gobject* args));
+void scope_define_builtin(scope *sc, char *ident, gobject* (*func)(gobject* args), unsigned int n_args);
 
 /**
  * Creates a new scope with a given parent scope.

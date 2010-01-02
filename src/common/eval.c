@@ -66,10 +66,22 @@ gobject* eval_funcall(gobject *func_ident, gobject *args, scope *sc)
 
   bi = scope_get_builtin(sc, func_ident->value.identifier);
   if(bi) {
-    if(!car(args)->quoted) {
-      val = bi->func(eval(car(args), sc));
+    if(bi->n_args == 0) {
+      val = bi->func(nil);
+    } else if(bi->n_args > 1) {
+      /* handle multiple-argument built-in function by passing it all
+         arguments as a list */
+      if(!args->quoted) {
+        val = bi->func(eval(args, sc));
+      } else {
+        val = bi->func(args);
+      }
     } else {
-      val = bi->func(car(args));
+      if(!car(args)->quoted) {
+        val = bi->func(eval(car(args), sc));
+      } else {
+        val = bi->func(car(args));
+      }
     }
 
     assert(val);

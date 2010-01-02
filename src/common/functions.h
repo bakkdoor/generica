@@ -39,4 +39,12 @@ gobject* print_object_stdout(gobject *obj);
 
 gobject* println_object_stdout(gobject *obj);
 
+gobject* add(gobject *args);
+
+gobject* subtract(gobject *args);
+
+gobject* multiply(gobject *args);
+
+gobject* divide(gobject *args);
+
 #endif /* _COMMON_FUNCTIONS_H_ */

@@ -6,14 +6,18 @@ void init_global_scope()
   global_scope->builtins = NULL;
 
   /* scope_define_builtin("define", define); */
-  scope_define_builtin(global_scope, "car", car);
-  scope_define_builtin(global_scope, "cdr", cdr);
-  scope_define_builtin(global_scope, "empty", empty);
-  scope_define_builtin(global_scope, "print", print_object_stdout);
-  scope_define_builtin(global_scope, "println", println_object_stdout);
+  scope_define_builtin(global_scope, "car", car, 1);
+  scope_define_builtin(global_scope, "cdr", cdr, 1);
+  scope_define_builtin(global_scope, "empty", empty, 1);
+  scope_define_builtin(global_scope, "print", print_object_stdout, 1);
+  scope_define_builtin(global_scope, "println", println_object_stdout, 1);
+  scope_define_builtin(global_scope, "+", add, 2);
+  scope_define_builtin(global_scope, "-", subtract, 2);
+  scope_define_builtin(global_scope, "*", multiply, 2);
+  scope_define_builtin(global_scope, "/", divide, 2);
 }
 
-void scope_define_builtin(scope *sc, char *ident, gobject* (*func)(gobject* args))
+void scope_define_builtin(scope *sc, char *ident, gobject* (*func)(gobject* args), unsigned int n_args)
 {
   builtin *new_b = malloc(sizeof(builtin));
   builtin *tmp;
@@ -24,6 +28,7 @@ void scope_define_builtin(scope *sc, char *ident, gobject* (*func)(gobject* args
 
   new_b->identifier = ident;
   new_b->func = func;
+  new_b->n_args = n_args;
 
   tmp = sc->builtins;
   new_b->next = tmp;
