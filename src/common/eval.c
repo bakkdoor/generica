@@ -24,11 +24,6 @@ gobject* eval(gobject *obj, scope *sc)
 gobject* eval_identifier(gobject *obj, scope *sc)
 {
   gobject *val = scope_get_ident(sc, obj);
-  if(val) {
-    printf("found val in scope:");
-    print_object(val, stdout);
-    printf("\n");
-  }
   return val;
 }
 
@@ -37,11 +32,11 @@ gobject* eval_cons(gobject *obj, scope *sc)
   if(obj->type == OBJ_CONS) {
     /* TODO: fix this! */
     /* return eval(car(obj), sc); */
-    switch(car(obj)->type) {
+    switch(car(obj, sc)->type) {
     case OBJ_IDENTIFIER:
       /* handle funcall */
       if(obj->quoted == false) {
-        return eval_funcall(car(obj), cdr(obj), sc);
+        return eval_funcall(car(obj, sc), cdr(obj, sc), sc);
       } else {
         return obj;
       }
@@ -67,20 +62,20 @@ gobject* eval_funcall(gobject *func_ident, gobject *args, scope *sc)
   bi = scope_get_builtin(sc, func_ident->value.identifier);
   if(bi) {
     if(bi->n_args == 0) {
-      val = bi->func(nil);
+      val = bi->func(nil, sc);
     } else if(bi->n_args > 1) {
       /* handle multiple-argument built-in function by passing it all
          arguments as a list */
       if(!args->quoted) {
-        val = bi->func(eval(args, sc));
+        val = bi->func(eval(args, sc), sc);
       } else {
-        val = bi->func(args);
+        val = bi->func(args, sc);
       }
     } else {
-      if(!car(args)->quoted) {
-        val = bi->func(eval(car(args), sc));
+      if(!car(args, sc)->quoted) {
+        val = bi->func(eval(car(args, sc), sc), sc);
       } else {
-        val = bi->func(car(args));
+        val = bi->func(car(args, sc), sc);
       }
     }
 

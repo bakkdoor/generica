@@ -11,34 +11,34 @@
  * @param obj The cons cell object.
  * @return The car (first element) of the given cons cell.
  */
-gobject* car(gobject *obj);
+gobject* car(gobject *obj, scope *sc);
 
 /**
  * Returns the cdr (rest of list) of a list object (cons cell), if any.
  * @param obj The cons cell object.
  * @return The cdr (rest of list) of the given cons cell.
  */
-gobject* cdr(gobject *obj);
+gobject* cdr(gobject *obj, scope *sc);
 
 /**
  * Indicates, if a given object (cons cell) is empty.
  * @param The cons cell object.
  * @return t or nil, depending on if it's empty or not.
  */
-gobject* empty(gobject *obj);
+gobject* empty(gobject *obj, scope *sc);
 
-gobject* print_object_stdout(gobject *obj);
+gobject* print_object_stdout(gobject *obj, scope *sc);
 
-gobject* println_object_stdout(gobject *obj);
+gobject* println_object_stdout(gobject *obj, scope *sc);
 
-gobject* equal(gobject *args);
+gobject* equal(gobject *args, scope *sc);
 
-gobject* add(gobject *args);
+gobject* add(gobject *args, scope *sc);
 
-gobject* subtract(gobject *args);
+gobject* subtract(gobject *args, scope *sc);
 
-gobject* multiply(gobject *args);
+gobject* multiply(gobject *args, scope *sc);
 
-gobject* divide(gobject *args);
+gobject* divide(gobject *args, scope *sc);
 
 #endif /* _COMMON_FUNCTIONS_H_ */

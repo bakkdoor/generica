@@ -74,7 +74,7 @@ gobject* hash_obj(key_val_node *key_val_list)
   return obj;
 }
 
-void print_object(gobject *obj, FILE *stream)
+void print_object(gobject *obj, scope *sc, FILE *stream)
 {
   if(obj) {
     switch(obj->type) {
@@ -97,15 +97,15 @@ void print_object(gobject *obj, FILE *stream)
       fprintf(stream, "%s", obj->value.string);
       break;
     case OBJ_HASH:
-      print_hash_obj(obj, stream);
+      print_hash_obj(obj, sc, stream);
       break;
     case OBJ_CONS:
       fprintf(stream, "(");
-      if(empty(obj) == nil) {
+      if(empty(obj, sc) == nil) {
         gobject *curr_cons = obj;
         while(curr_cons != nil) {
-          print_object(car(curr_cons), stream);          
-          curr_cons = cdr(curr_cons);
+          print_object(car(curr_cons, sc), sc, stream);          
+          curr_cons = cdr(curr_cons, sc);
 
           /* skip last space before end of list */
           if(curr_cons != nil) {
@@ -118,7 +118,7 @@ void print_object(gobject *obj, FILE *stream)
   }
 }
 
-void print_hash_obj(gobject *hash, FILE *stream)
+void print_hash_obj(gobject *hash, scope *sc, FILE *stream)
 {
   hash_entry *tmp;
   unsigned int i;
@@ -130,9 +130,9 @@ void print_hash_obj(gobject *hash, FILE *stream)
       if(hash->value.hashval->entries[i]) {
         for(tmp = hash->value.hashval->entries[i]; tmp; tmp = tmp->next) {
           if(tmp->key && tmp->value) {
-            print_object(tmp->key, stream);
+            print_object(tmp->key, sc, stream);
             fprintf(stream, " => ");
-            print_object(tmp->value, stream);
+            print_object(tmp->value, sc, stream);
           }
         }
       }

@@ -13,8 +13,8 @@
 #include "types.h"
 #include "hash.h"
 #include "gobject.h"
-#include "functions.h"
 #include "scope.h"
+#include "functions.h"
 #include "eval.h"
 #include "utils.h"
 

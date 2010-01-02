@@ -42,10 +42,10 @@ programm:       /* empty */
 sexp:           empty_list
                 | empty_quote
                 | LPAREN sexp_list RPAREN { 
-                    $$ = cons_obj(car($2), cdr($2));
+                    $$ = cons_obj(car($2, global_scope), cdr($2, global_scope));
                 }
                 | QUOTEPAREN sexp_list RPAREN {
-                    gobject *obj = cons_obj(car($2), cdr($2));
+                    gobject *obj = cons_obj(car($2, global_scope), cdr($2, global_scope));
                     obj->quoted = true;
                     $$ = obj;
                 };

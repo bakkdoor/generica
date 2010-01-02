@@ -8,6 +8,7 @@
 
 /* forward declaration */
 typedef struct gobject_t gobject;
+struct scope_s;
 
 /* cons cell consists of car & cdr */
 typedef struct cons_cell_t {
@@ -122,14 +123,14 @@ gobject* cons_obj(gobject *car, gobject *cdr);
  * @param obj Object to print to stream.
  * @param stream File stream to print to.
  */ 
-void print_object(gobject *obj, FILE *stream);
+void print_object(gobject *obj, struct scope_s *sc, FILE *stream);
 
 /**
  * (Pretty)prints a given hash object to a given file stream.
  * @param hash Hash object to print to stream.
  * @param stream File stream to print to.
  */ 
-void print_hash_obj(gobject *hash, FILE *stream);
+void print_hash_obj(gobject *hash, struct scope_s *sc, FILE *stream);
 
 /**
  * Indicates, if two given cons cells are equal.

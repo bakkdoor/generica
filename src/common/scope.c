@@ -18,7 +18,7 @@ void init_global_scope()
   scope_define_builtin(global_scope, "/", divide, 2);
 }
 
-void scope_define_builtin(scope *sc, char *ident, gobject* (*func)(gobject* args), unsigned int n_args)
+void scope_define_builtin(scope *sc, char *ident, gobject* (*func)(gobject* args, scope *sc), unsigned int n_args)
 {
   builtin *new_b = malloc(sizeof(builtin));
   builtin *tmp;
