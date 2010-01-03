@@ -22,6 +22,9 @@ void init_global_scope()
   scope_define_builtin(global_scope, "unless", unless, 3);
   scope_define_builtin_special(global_scope, "define", define, 2);
   scope_define_builtin_special(global_scope, "lambda", lambda, 2);
+  scope_define_builtin_special(global_scope, "do", do_f, 2);
+  scope_define_builtin_special(global_scope, "special", special, 2);
+  scope_define_builtin(global_scope, "eval", eval_f, 1);
 }
 
 void scope_define_builtin(scope *sc, char *ident, gobject (*func)(gobject args, scope *sc), unsigned int n_args)

@@ -51,4 +51,10 @@ gobject define(gobject args, scope *sc);
 
 gobject lambda(gobject args, scope *sc);
 
+gobject do_f(gobject args, scope *sc);
+
+gobject special(gobject args, scope *sc);
+
+gobject eval_f(gobject obj, scope *sc);
+
 #endif /* _COMMON_FUNCTIONS_H_ */

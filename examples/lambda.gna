@@ -1,3 +1,13 @@
 (define square (lambda (x) 
                  (* x x)))
 (println (square 5))
+
+;; redefinition of square
+(define square (lambda (x y)
+                 (+ x y)))
+(println (square 4 5))
+
+(define do-test (lambda (x)
+                  (do (println x)
+                      (println x))))
+(do-test 10)

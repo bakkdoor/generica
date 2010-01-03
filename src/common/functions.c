@@ -245,3 +245,40 @@ gobject lambda(gobject args, scope *sc)
 
   return lambda_obj(arglist, body_expr);
 }
+
+gobject do_f(gobject args, scope *sc)
+{
+  gobject forms = args;
+  gobject retval;
+  while(forms != nil) {
+    retval = eval(car(forms, sc), sc);
+    forms = cdr(forms, sc);
+  }
+  return retval;
+}
+
+gobject special(gobject args, scope *sc)
+{
+  return args;
+}
+
+gobject eval_f(gobject obj, scope *sc)
+{
+  gobject retval;
+  bool was_quoted = false;
+
+  /* remove quotation */
+  if(obj->quoted) {
+    obj->quoted = false;
+    was_quoted = true;
+  }
+
+  retval = eval(obj, sc);
+
+  /* restore quotation */
+  if(was_quoted) {
+    obj->quoted = true;
+  }
+
+  return retval;
+}
