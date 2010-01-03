@@ -1,6 +1,6 @@
 #include "includes.h"
 
-gobject* eval(gobject *obj, scope *sc)
+gobject eval(gobject obj, scope *sc)
 {
   assert(obj);
 
@@ -21,15 +21,15 @@ gobject* eval(gobject *obj, scope *sc)
   }
 }
 
-gobject* eval_identifier(gobject *obj, scope *sc)
+gobject eval_identifier(gobject obj, scope *sc)
 {
-  gobject *val = scope_get_ident(sc, obj);
+  gobject val = scope_get_ident(sc, obj);
   return val;
 }
 
-gobject* eval_cons(gobject *obj, scope *sc)
+gobject eval_cons(gobject obj, scope *sc)
 {
-  gobject *ident_val = NULL;
+  gobject ident_val = NULL;
   if(obj->type == OBJ_CONS) {
     /* TODO: fix this! */
     /* return eval(car(obj), sc); */
@@ -56,11 +56,11 @@ gobject* eval_cons(gobject *obj, scope *sc)
   }
 }
 
-gobject* eval_funcall(gobject *func_ident, gobject *args, scope *sc)
+gobject eval_funcall(gobject func_ident, gobject args, scope *sc)
 {
   builtin *bi;
-  gobject *func_obj;
-  gobject *val;
+  gobject func_obj;
+  gobject val;
 
   assert(func_ident);
   assert(args);

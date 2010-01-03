@@ -22,7 +22,7 @@ void init_global_scope()
   scope_define_builtin_special(global_scope, "define", define, 2);
 }
 
-void scope_define_builtin(scope *sc, char *ident, gobject* (*func)(gobject* args, scope *sc), unsigned int n_args)
+void scope_define_builtin(scope *sc, char *ident, gobject (*func)(gobject args, scope *sc), unsigned int n_args)
 {
   builtin *new_b = malloc(sizeof(builtin));
   builtin *tmp;
@@ -42,7 +42,7 @@ void scope_define_builtin(scope *sc, char *ident, gobject* (*func)(gobject* args
 }
 
 void scope_define_builtin_special(scope *sc, char *ident, 
-                                  gobject* (*func)(gobject* args, scope *sc), 
+                                  gobject (*func)(gobject args, scope *sc), 
                                   unsigned int n_args)
 {
   scope_define_builtin(sc, ident, func, n_args);
@@ -60,7 +60,7 @@ scope* new_scope(scope *parent)
   return sc;
 }
 
-gobject* scope_get_ident(scope *sc, gobject *identifier)
+gobject scope_get_ident(scope *sc, gobject identifier)
 {
   hash_entry *entry;
   if((entry = hash_lookup(sc->scope_ht, identifier))) {
@@ -84,7 +84,7 @@ builtin* scope_get_builtin(scope *sc, char *identifier)
   return NULL;
 }
 
-bool scope_define(scope *sc, gobject *identifier, gobject *value)
+bool scope_define(scope *sc, gobject identifier, gobject value)
 {
   return hash_add(sc->scope_ht, identifier, value);
 }

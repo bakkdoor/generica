@@ -6,7 +6,7 @@ int yylex(void);
 %}
 
 %union{
-  gobject*   object;
+  gobject       object;
   key_val_node *key_val_list;
 }
 
@@ -45,7 +45,7 @@ sexp:           empty_list
                     $$ = cons_obj(car($2, global_scope), cdr($2, global_scope));
                 }
                 | QUOTEPAREN sexp_list RPAREN {
-                    gobject *obj = cons_obj(car($2, global_scope), cdr($2, global_scope));
+                    gobject obj = cons_obj(car($2, global_scope), cdr($2, global_scope));
                     obj->quoted = true;
                     $$ = obj;
                 };
@@ -55,7 +55,7 @@ empty_list:     LPAREN RPAREN {
                 };
 
 empty_quote:    QUOTEPAREN RPAREN { 
-                    gobject *obj = cons_obj(nil, nil);
+                    gobject obj = cons_obj(nil, nil);
                     obj->quoted = true;
                     $$ = obj;
                 };

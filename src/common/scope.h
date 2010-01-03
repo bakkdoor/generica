@@ -12,7 +12,7 @@ typedef struct builtin_s builtin;
 
 struct builtin_s {
   char *identifier;
-  gobject* (*func)(gobject* args, scope *sc);
+  gobject (*func)(gobject args, scope *sc);
   unsigned int n_args;
   bool special;
   builtin *next;
@@ -41,9 +41,9 @@ extern scope *global_scope;
  */
 void init_global_scope();
 
-void scope_define_builtin(scope *sc, char *ident, gobject* (*func)(gobject* args, scope *sc), unsigned int n_args);
+void scope_define_builtin(scope *sc, char *ident, gobject (*func)(gobject args, scope *sc), unsigned int n_args);
 
-void scope_define_builtin_special(scope *sc, char *ident, gobject* (*func)(gobject* args, scope *sc), unsigned int n_args);
+void scope_define_builtin_special(scope *sc, char *ident, gobject (*func)(gobject args, scope *sc), unsigned int n_args);
 
 /**
  * Creates a new scope with a given parent scope.
@@ -61,10 +61,10 @@ scope* new_scope(scope *parent);
  * @return The (value) object represented by the identifier within the
  * scope
  */
-gobject* scope_get_ident(scope *sc, gobject *identifier);
+gobject scope_get_ident(scope *sc, gobject identifier);
 
 builtin* scope_get_builtin(scope *sc, char *identifier);
 
-bool scope_define(scope *sc, gobject *identifier, gobject *value);
+bool scope_define(scope *sc, gobject identifier, gobject value);
 
 #endif /* _SCOPE_H_ */

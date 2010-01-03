@@ -7,13 +7,13 @@
  */
 
 /* forward declaration */
-typedef struct gobject_t gobject;
+typedef struct gobject_t* gobject;
 struct scope_s;
 
 /* cons cell consists of car & cdr */
 typedef struct cons_cell_t {
-  gobject *car;
-  gobject *cdr;
+  gobject car;
+  gobject cdr;
 } cons_cell;
 
 typedef struct lambda_t {
@@ -47,7 +47,7 @@ struct gobject_t {
     lambda_expression lambdaval;
   } value;
 
-  gobject *next;
+  gobject next;
 };
 
 /* global generica object ids */
@@ -65,8 +65,8 @@ struct gobject_t {
 /**
  * nil & t objects 
  */
-extern gobject *nil;
-extern gobject *t;
+extern gobject nil;
+extern gobject t;
 
 /** 
  * functions
@@ -82,42 +82,42 @@ void init_global_objects();
  * @param type The type (see below) of the new object.
  * @return The newly created object.
  */
-gobject* new_object(int type);
+gobject new_object(int type);
 
 /**
  * Creates a new integer object with a given value.
  * @param val Value for integer object.
  * @return New integer object.
  */
-gobject* integer_obj(int val);
+gobject integer_obj(int val);
 
 /**
  * Creates a new double object with a given value.
  * @param val Value for double object.
  * @return New double object.
  */ 
-gobject* double_obj(double val);
+gobject double_obj(double val);
 
 /**
  * Creates a new string object with a given value.
  * @param val Value for string object.
  * @return New string object.
  */ 
-gobject* string_obj(char *val);
+gobject string_obj(char *val);
 
 /**
  * Creates a new identifier object with a given value.
  * @param val Value for identifier object.
  * @return New identifier object.
  */ 
-gobject* identifier_obj(char *val);
+gobject identifier_obj(char *val);
 
 /**
  * Creates a new hash object with a given list of key value pairs.
  * @param val Value for hash object.
  * @return New hash object.
  */ 
-gobject* hash_obj(key_val_node *key_val_list);
+gobject hash_obj(key_val_node *key_val_list);
 
 /**
  * Creates a new cons cell object with a given value.
@@ -125,7 +125,7 @@ gobject* hash_obj(key_val_node *key_val_list);
  * @param cdr Cdr value for cons cell object.
  * @return New cons cell object.
  */ 
-gobject* cons_obj(gobject *car, gobject *cdr);
+gobject cons_obj(gobject car, gobject cdr);
 
 /**
  * Creates a lambda_expression object with a given argument list & body.
@@ -133,21 +133,21 @@ gobject* cons_obj(gobject *car, gobject *cdr);
  * @param body Lambda body cons cell.
  * @return New lambda_expression object.
  */ 
-gobject* lambda_obj(cons_cell args, cons_cell body);
+gobject lambda_obj(cons_cell args, cons_cell body);
 
 /**
  * (Pretty)prints a given object to a given file stream.
  * @param obj Object to print to stream.
  * @param stream File stream to print to.
  */ 
-void print_object(gobject *obj, struct scope_s *sc, FILE *stream);
+void print_object(gobject obj, struct scope_s *sc, FILE *stream);
 
 /**
  * (Pretty)prints a given hash object to a given file stream.
  * @param hash Hash object to print to stream.
  * @param stream File stream to print to.
  */ 
-void print_hash_obj(gobject *hash, struct scope_s *sc, FILE *stream);
+void print_hash_obj(gobject hash, struct scope_s *sc, FILE *stream);
 
 /**
  * Indicates, if two given cons cells are equal.
@@ -163,6 +163,6 @@ bool ccell_equals(cons_cell a, cons_cell b);
  * @param b Second object.
  * @return t if equal, nil otherwise.
  */
-gobject* obj_equals(gobject *a, gobject *b);
+gobject obj_equals(gobject a, gobject b);
 
 #endif /* _GOBJECT_H_ */

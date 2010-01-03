@@ -1,6 +1,6 @@
 #include "includes.h"
 
-key_val_node* key_val_obj(gobject *key, gobject *val, key_val_node *next)
+key_val_node* key_val_obj(gobject key, gobject val, key_val_node *next)
 {
   key_val_node *node = malloc(sizeof(key_val_node));
 
@@ -39,7 +39,7 @@ hashtable* new_hash(key_val_node *key_val_list)
   return ht;
 }
 
-hash_entry* new_hash_entry(gobject *key, gobject *value)
+hash_entry* new_hash_entry(gobject key, gobject value)
 {
   if(key && value) {
     hash_entry *entry = malloc(sizeof(hash_entry));
@@ -53,7 +53,7 @@ hash_entry* new_hash_entry(gobject *key, gobject *value)
   }
 }
 
-unsigned int hash_val(gobject *key)
+unsigned int hash_val(gobject key)
 {
   unsigned int hashval;
   char *str;
@@ -90,7 +90,7 @@ unsigned int hash_val(gobject *key)
   return hashval % HASH_SIZE;
 }
 
-bool hash_add(hashtable *ht, gobject *key, gobject *value)
+bool hash_add(hashtable *ht, gobject key, gobject value)
 {
   if(ht && key && value) {
     int hashval = hash_val(key);
@@ -126,7 +126,7 @@ bool hash_add(hashtable *ht, gobject *key, gobject *value)
   }
 }
 
-hash_entry* hash_lookup(hashtable *ht, gobject *key)
+hash_entry* hash_lookup(hashtable *ht, gobject key)
 {
   unsigned int hashval;
   hash_entry *current;
@@ -145,12 +145,12 @@ hash_entry* hash_lookup(hashtable *ht, gobject *key)
   return NULL;
 }
 
-bool hash_includes(hashtable *ht, gobject *key)
+bool hash_includes(hashtable *ht, gobject key)
 {
   return (hash_lookup(ht, key) != NULL);
 }
 
-bool hash_remove(hashtable *ht, gobject *key)
+bool hash_remove(hashtable *ht, gobject key)
 {
   unsigned int hashval = hash_val(key);
   hash_entry *current, *last;

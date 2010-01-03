@@ -1,6 +1,6 @@
 #include "includes.h"
 
-gobject* car(gobject *args, scope *sc)
+gobject car(gobject args, scope *sc)
 {
   if(args) {
     switch(args->type) {
@@ -17,7 +17,7 @@ gobject* car(gobject *args, scope *sc)
   return nil;
 }
 
-gobject* cdr(gobject *obj, scope *sc)
+gobject cdr(gobject obj, scope *sc)
 {
   if(obj) {
     switch(obj->type) {
@@ -34,7 +34,7 @@ gobject* cdr(gobject *obj, scope *sc)
   return nil;
 }
 
-gobject* empty(gobject *obj, scope *sc)
+gobject empty(gobject obj, scope *sc)
 {
   if(obj && obj->type == OBJ_CONS) {
     if(!obj->value.ccell.car || obj->value.ccell.car == nil) {
@@ -48,31 +48,31 @@ gobject* empty(gobject *obj, scope *sc)
   }
 }
 
-gobject* print_object_stdout(gobject *obj, scope *sc)
+gobject print_object_stdout(gobject obj, scope *sc)
 {
   print_object(eval(obj, sc), sc, stdout);
   return nil;
 }
 
-gobject* println_object_stdout(gobject *obj, scope *sc)
+gobject println_object_stdout(gobject obj, scope *sc)
 {
   print_object(eval(obj, sc), sc, stdout);
   printf("\n");
   return nil;
 }
 
-gobject* equal(gobject *args, scope *sc)
+gobject equal(gobject args, scope *sc)
 {
-  gobject *arg1 = eval(car(args, sc), sc);
-  gobject *arg2 = eval(car(cdr(args, sc), sc), sc);
+  gobject arg1 = eval(car(args, sc), sc);
+  gobject arg2 = eval(car(cdr(args, sc), sc), sc);
   return obj_equals(arg1, arg2);
 }
 
-gobject* add(gobject *args, scope *sc)
+gobject add(gobject args, scope *sc)
 {
   bool any_double = false;
   double val = 0;
-  gobject *arg1, *arg2;
+  gobject arg1, arg2;
 
   arg1 = eval(car(args, sc), sc);
   arg2 = eval(car(cdr(args, sc), sc), sc);
@@ -98,11 +98,11 @@ gobject* add(gobject *args, scope *sc)
   }
 }
 
-gobject* subtract(gobject *args, scope *sc)
+gobject subtract(gobject args, scope *sc)
 {
   bool any_double = false;
   double val = 0;
-  gobject *arg1, *arg2;
+  gobject arg1, arg2;
 
   arg1 = eval(car(args, sc), sc);
   arg2 = eval(car(cdr(args, sc), sc), sc);
@@ -128,11 +128,11 @@ gobject* subtract(gobject *args, scope *sc)
   }
 }
 
-gobject* multiply(gobject *args, scope *sc)
+gobject multiply(gobject args, scope *sc)
 {
   bool any_double = false;
   double val = 0;
-  gobject *arg1, *arg2;
+  gobject arg1, arg2;
 
   arg1 = eval(car(args, sc), sc);
   arg2 = eval(car(cdr(args, sc), sc), sc);
@@ -158,12 +158,12 @@ gobject* multiply(gobject *args, scope *sc)
   }
 }
 
-gobject* divide(gobject *args, scope *sc)
+gobject divide(gobject args, scope *sc)
 {
   bool isdouble = false;
   bool any_double = false;
   double val = 0;
-  gobject *arg1, *arg2;
+  gobject arg1, arg2;
 
   arg1 = eval(car(args, sc), sc);
   arg2 = eval(car(cdr(args, sc), sc), sc);
@@ -191,9 +191,9 @@ gobject* divide(gobject *args, scope *sc)
   }
 }
 
-gobject* if_f(gobject *args, scope *sc)
+gobject if_f(gobject args, scope *sc)
 {
-  gobject *cond = eval(car(args, sc), sc);
+  gobject cond = eval(car(args, sc), sc);
 
   if(cond != nil) {
     return eval(car(cdr(args, sc), sc), sc);  
@@ -202,9 +202,9 @@ gobject* if_f(gobject *args, scope *sc)
   }
 }
 
-gobject* unless(gobject *args, scope *sc)
+gobject unless(gobject args, scope *sc)
 {
-  gobject *cond = eval(car(args, sc), sc);
+  gobject cond = eval(car(args, sc), sc);
 
   if(cond == nil) {
     return eval(car(cdr(args, sc), sc), sc);  
@@ -213,10 +213,10 @@ gobject* unless(gobject *args, scope *sc)
   }
 }
 
-gobject* define(gobject *args, scope *sc)
+gobject define(gobject args, scope *sc)
 {
-  gobject *ident = car(args, sc);
-  gobject *value = eval(car(cdr(args, sc), sc), sc);
+  gobject ident = car(args, sc);
+  gobject value = eval(car(cdr(args, sc), sc), sc);
   
   scope_define(sc, ident, value);
   
