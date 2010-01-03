@@ -1,0 +1,18 @@
+========================================================================
+                 generica - a simple lisp-like language
+         (c) 2009/2010 Christopher Bertels <bakkdoor@flasht.de>         
+========================================================================
+
+(goals)
+  - implement a simple, yet powerful lisp-like language with:
+    - a simple, yet useful object system
+    - good concurrency semantics (via messaging, erlang style)
+    - focus on immutability (but not purely functional like Haskell)
+  - have fun implementing it
+  - use ANSI C for the interpreter and possibly no external dependencies
+  - small codebase and fast compilation, if possible
+
+(contact)
+  - contact me via my email adress shown above.
+
+(more information coming soon)
