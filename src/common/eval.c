@@ -29,14 +29,21 @@ gobject* eval_identifier(gobject *obj, scope *sc)
 
 gobject* eval_cons(gobject *obj, scope *sc)
 {
+  gobject *ident_val = NULL;
   if(obj->type == OBJ_CONS) {
     /* TODO: fix this! */
     /* return eval(car(obj), sc); */
     switch(car(obj, sc)->type) {
     case OBJ_IDENTIFIER:
-      /* handle funcall */
       if(obj->quoted == false) {
-        return eval_funcall(car(obj, sc), cdr(obj, sc), sc);
+        /* first, try to get a value */
+        if((ident_val = scope_get_ident(sc, car(obj, sc))) != nil) {
+          /* return new cons cell object with first item evaluated */
+          return cons_obj(ident_val, eval(cdr(obj, sc), sc));
+        } else {
+          /* then, handle funcall */
+          return eval_funcall(car(obj, sc), cdr(obj, sc), sc);
+        }
       } else {
         return obj;
       }
