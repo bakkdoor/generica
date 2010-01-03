@@ -48,6 +48,18 @@ gobject empty(gobject obj, scope *sc)
   }
 }
 
+gobject length(gobject cons, scope *sc)
+{
+  int length = 0;
+  gobject tmp = cons;
+  while(tmp != nil) {
+    length += 1;
+    tmp = cdr(tmp, sc);
+  }
+
+  return integer_obj(length);
+}
+
 gobject print_object_stdout(gobject obj, scope *sc)
 {
   print_object(eval(obj, sc), sc, stdout);
@@ -217,8 +229,19 @@ gobject define(gobject args, scope *sc)
 {
   gobject ident = car(args, sc);
   gobject value = eval(car(cdr(args, sc), sc), sc);
-  
+
   scope_define(sc, ident, value);
-  
+
   return value;
+}
+
+gobject lambda(gobject args, scope *sc)
+{
+  gobject arglist = car(args, sc);
+  gobject body_expr = car(cdr(args, sc), sc);
+
+  assert(arglist->type == OBJ_CONS);
+  assert(body_expr->type == OBJ_CONS);
+
+  return lambda_obj(arglist, body_expr);
 }

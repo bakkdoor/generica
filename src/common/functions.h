@@ -27,6 +27,8 @@ gobject cdr(gobject obj, scope *sc);
  */
 gobject empty(gobject obj, scope *sc);
 
+gobject length(gobject cons, scope *sc);
+
 gobject print_object_stdout(gobject obj, scope *sc);
 
 gobject println_object_stdout(gobject obj, scope *sc);
@@ -46,5 +48,7 @@ gobject if_f(gobject args, scope *sc);
 gobject unless(gobject args, scope *sc);
 
 gobject define(gobject args, scope *sc);
+
+gobject lambda(gobject args, scope *sc);
 
 #endif /* _COMMON_FUNCTIONS_H_ */
