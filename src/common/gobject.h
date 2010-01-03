@@ -17,8 +17,8 @@ typedef struct cons_cell_t {
 } cons_cell;
 
 typedef struct lambda_t {
-  cons_cell args;
-  cons_cell body;
+  gobject args;
+  gobject body;
 } lambda_expression;
 
 struct gobject_t {
@@ -133,7 +133,7 @@ gobject cons_obj(gobject car, gobject cdr);
  * @param body Lambda body cons cell.
  * @return New lambda_expression object.
  */ 
-gobject lambda_obj(cons_cell args, cons_cell body);
+gobject lambda_obj(gobject args, gobject body);
 
 /**
  * (Pretty)prints a given object to a given file stream.

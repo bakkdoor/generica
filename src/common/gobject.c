@@ -74,7 +74,7 @@ gobject hash_obj(key_val_node *key_val_list)
   return obj;
 }
 
-gobject lambda_obj(cons_cell args, cons_cell body)
+gobject lambda_obj(gobject args, gobject body)
 {
   gobject lambda = new_object(OBJ_LAMBDA);
 

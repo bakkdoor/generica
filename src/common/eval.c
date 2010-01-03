@@ -11,6 +11,7 @@ gobject eval(gobject obj, scope *sc)
   case OBJ_DOUBLE:
   case OBJ_STRING:
   case OBJ_HASH:
+  case OBJ_LAMBDA:
     return obj;
   case OBJ_IDENTIFIER:
     return eval_identifier(obj, sc);
@@ -38,8 +39,13 @@ gobject eval_cons(gobject obj, scope *sc)
       if(obj->quoted == false) {
         /* first, try to get a value */
         if((ident_val = scope_get_ident(sc, car(obj, sc))) != nil) {
-          /* return new cons cell object with first item evaluated */
-          return cons_obj(ident_val, eval(cdr(obj, sc), sc));
+          if(ident_val->type != OBJ_LAMBDA) {
+            /* return new cons cell object with first item evaluated */
+            return cons_obj(ident_val, eval(cdr(obj, sc), sc));
+          } else {
+            /* it's a funcall (lambda call) ! */
+            return eval_lambda_call(ident_val, cdr(obj, sc), sc);
+          }
         } else {
           /* then, handle funcall */
           return eval_funcall(car(obj, sc), cdr(obj, sc), sc);
@@ -91,7 +97,40 @@ gobject eval_funcall(gobject func_ident, gobject args, scope *sc)
     return val;
   } else {
     func_obj = scope_get_ident(sc, func_ident);
+    warn("probably couldn't find function: %s", func_ident->value.identifier);
     /* TODO: to actual eval of function */
     return func_obj;
   }
+}
+
+gobject eval_lambda_call(gobject lambda, gobject args, scope *sc)
+{
+  gobject formal_arg;
+  gobject arg;
+  gobject retval;
+  scope *call_scope;
+
+  int n_args = length(args, sc)->value.intval;
+  int n_formal_args = length(lambda->value.lambdaval.args, sc)->value.intval;
+
+  if(n_args != n_formal_args){
+    warn("Formal arg count is wrong: %d instead of %d", n_args, n_formal_args);
+    return nil;
+  }
+
+  call_scope = new_scope(sc);
+
+  /* set args in call_scope */
+  formal_arg = lambda->value.lambdaval.args;
+  arg = args;
+  while(formal_arg != nil && arg != nil) {
+    scope_define(call_scope, car(formal_arg, sc), eval(car(arg, call_scope), call_scope));
+    /* move on in lists */
+    formal_arg = cdr(formal_arg, sc);
+    arg = cdr(arg, sc);
+  }
+
+  retval = eval(lambda->value.lambdaval.body, call_scope);
+  free(call_scope);
+  return retval;
 }

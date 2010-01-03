@@ -9,6 +9,7 @@ void init_global_scope()
   scope_define_builtin(global_scope, "car", car, 1);
   scope_define_builtin(global_scope, "cdr", cdr, 1);
   scope_define_builtin(global_scope, "empty", empty, 1);
+  scope_define_builtin(global_scope, "length", length, 1);
   scope_define_builtin(global_scope, "print", print_object_stdout, 1);
   scope_define_builtin(global_scope, "println", println_object_stdout, 1);
   scope_define_builtin(global_scope, "=", equal, 2);
@@ -20,6 +21,7 @@ void init_global_scope()
   scope_define_builtin(global_scope, "if", if_f, 3);
   scope_define_builtin(global_scope, "unless", unless, 3);
   scope_define_builtin_special(global_scope, "define", define, 2);
+  scope_define_builtin_special(global_scope, "lambda", lambda, 2);
 }
 
 void scope_define_builtin(scope *sc, char *ident, gobject (*func)(gobject args, scope *sc), unsigned int n_args)
@@ -69,6 +71,9 @@ gobject scope_get_ident(scope *sc, gobject identifier)
     }
     return nil;
   } else {
+    if(sc->parent) {
+      return scope_get_ident(sc->parent, identifier);
+    }
     return nil;
   }
 }
@@ -80,6 +85,9 @@ builtin* scope_get_builtin(scope *sc, char *identifier)
     if(strcmp(tmp->identifier, identifier) == 0) {
       return tmp;
     }
+  }
+  if(sc->parent) {
+    return scope_get_builtin(sc->parent, identifier);
   }
   return NULL;
 }
