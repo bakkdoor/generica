@@ -16,6 +16,11 @@ typedef struct cons_cell_t {
   gobject *cdr;
 } cons_cell;
 
+typedef struct lambda_t {
+  cons_cell args;
+  cons_cell body;
+} lambda_expression;
+
 struct gobject_t {
   int type;
   bool quoted;
@@ -37,6 +42,9 @@ struct gobject_t {
     
     /* cons cell value */
     cons_cell ccell;
+
+    /* lambda value (lambda expression as cons cell) */
+    lambda_expression lambdaval;
   } value;
 
   gobject *next;
@@ -50,6 +58,7 @@ struct gobject_t {
 #define OBJ_IDENTIFIER		12
 #define OBJ_STRING		13
 #define OBJ_HASH		14
+#define OBJ_LAMBDA		15
 #define OBJ_CONS		20
 
 
@@ -117,6 +126,14 @@ gobject* hash_obj(key_val_node *key_val_list);
  * @return New cons cell object.
  */ 
 gobject* cons_obj(gobject *car, gobject *cdr);
+
+/**
+ * Creates a lambda_expression object with a given argument list & body.
+ * @param args Argument list cons cell.
+ * @param body Lambda body cons cell.
+ * @return New lambda_expression object.
+ */ 
+gobject* lambda_obj(cons_cell args, cons_cell body);
 
 /**
  * (Pretty)prints a given object to a given file stream.

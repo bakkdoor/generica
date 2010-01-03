@@ -74,6 +74,20 @@ gobject* hash_obj(key_val_node *key_val_list)
   return obj;
 }
 
+gobject* lambda_obj(cons_cell args, cons_cell body)
+{
+  gobject *lambda = new_object(OBJ_LAMBDA);
+
+  assert(lambda);
+  
+  lambda->value.lambdaval.args = args;
+  lambda->value.lambdaval.body = body;
+
+  debug("new lambda expression");
+
+  return lambda;
+}
+
 void print_object(gobject *obj, scope *sc, FILE *stream)
 {
   if(obj) {
