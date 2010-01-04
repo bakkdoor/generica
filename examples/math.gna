@@ -36,3 +36,7 @@
 
 (println '(upto 0 10))
 (println (upto 0 10))
+(println "")
+
+(println '(downto 100 0))
+(println (downto 100 0))

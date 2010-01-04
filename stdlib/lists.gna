@@ -50,6 +50,12 @@
 
 (define upto
   (lambda (a b)
-    (if (>= a b)
+    (if (> a b)
         nil
       (cons a (upto (+ a 1) b)))))
+
+(define downto
+  (lambda (a b)
+    (if (< a b)
+        nil
+      (cons a (downto (- a 1) b)))))
