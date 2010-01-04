@@ -71,8 +71,14 @@ struct gobject_t {
 #define IS_T(obj) \
   obj->type == OBJ_T
 
+#define IS_INT(obj) \
+  obj->type == OBJ_INTEGER
+
+#define IS_DOUBLE(obj) \
+  obj->type == OBJ_DOUBLE
+
 #define IS_NUM(obj) \
-  (obj->type == OBJ_INTEGER || obj->type == OBJ_DOUBLE)
+  (IS_INT(obj) || IS_DOUBLE(obj))
 
 #define IS_IDENT(obj) \
   obj->type == OBJ_IDENTIFIER
@@ -88,6 +94,9 @@ struct gobject_t {
 
 #define IS_CONS(obj) \
   obj->type == OBJ_CONS
+
+#define NUMVAL(obj) \
+  IS_NUM(obj) ? (IS_INT(obj) ? obj->value.intval : obj->value.doubleval) : 0
 
 /**
  * nil & t objects 
