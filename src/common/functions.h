@@ -38,6 +38,8 @@ gobject multiply(gobject args, scope *sc);
 
 gobject divide(gobject args, scope *sc);
 
+gobject modulo(gobject args, scope *sc);
+
 gobject lt(gobject args, scope *sc);
 
 gobject gt(gobject args, scope *sc);
@@ -55,5 +57,7 @@ gobject do_f(gobject args, scope *sc);
 gobject special(gobject args, scope *sc);
 
 gobject eval_f(gobject obj, scope *sc);
+
+gobject not(gobject obj, scope *sc);
 
 #endif /* _COMMON_FUNCTIONS_H_ */

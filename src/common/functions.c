@@ -196,6 +196,17 @@ gobject divide(gobject args, scope *sc)
   }
 }
 
+gobject modulo(gobject args, scope *sc)
+{
+  gobject n1 = car(args, sc);
+  gobject n2 = car(cdr(args, sc), sc);
+  
+  double val1 = NUMVAL(n1);
+  double val2 = NUMVAL(n2);
+
+  return integer_obj((int)val1 % (int)val2);
+}
+
 gobject lt(gobject args, scope *sc)
 {
   gobject n1 = car(args, sc);
@@ -341,4 +352,13 @@ gobject eval_f(gobject obj, scope *sc)
   }
 
   return retval;
+}
+
+gobject not(gobject obj, scope *sc)
+{
+  if(obj == nil) {
+    return t;
+  } else {
+    return nil;
+  }
 }

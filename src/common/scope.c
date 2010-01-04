@@ -20,6 +20,7 @@ void init_global_scope()
   scope_define_builtin(global_scope, "-", subtract, 2);
   scope_define_builtin(global_scope, "*", multiply, 2);
   scope_define_builtin(global_scope, "/", divide, 2);
+  scope_define_builtin(global_scope, "%", modulo, 2);
   scope_define_builtin(global_scope, "<", lt, 2);
   scope_define_builtin(global_scope, ">", gt, 2);
 
@@ -30,6 +31,8 @@ void init_global_scope()
   scope_define_builtin_special(global_scope, "do", do_f, 2);
   scope_define_builtin_special(global_scope, "special", special, 2);
   scope_define_builtin(global_scope, "eval", eval_f, 1);
+
+  scope_define_builtin(global_scope, "not", not, 1);
 }
 
 void scope_define_builtin(scope *sc, char *ident, gobject (*func)(gobject args, scope *sc), unsigned int n_args)
