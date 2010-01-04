@@ -196,6 +196,70 @@ gobject divide(gobject args, scope *sc)
   }
 }
 
+gobject lt(gobject args, scope *sc)
+{
+  gobject n1 = car(args, sc);
+  gobject n2 = car(cdr(args, sc), sc);
+
+  double val1, val2;
+
+  if(IS_NUM(n1) && IS_NUM(n2)) {
+
+    if(n1->type == OBJ_INTEGER) {
+      val1 = n1->value.intval;
+    } else {
+      val1 = n1->value.doubleval;
+    }
+
+    if(n2->type == OBJ_INTEGER) {
+      val1 = n2->value.intval;
+    } else {
+      val1 = n2->value.doubleval;
+    }
+
+    if(val1 < val2) {
+      return t;
+    } else {
+      return nil;
+    }
+
+  } else {
+    return nil;
+  }
+}
+
+gobject gt(gobject args, scope *sc)
+{
+  gobject n1 = car(args, sc);
+  gobject n2 = car(cdr(args, sc), sc);
+
+  double val1, val2;
+
+  if(IS_NUM(n1) && IS_NUM(n2)) {
+
+    if(n1->type == OBJ_INTEGER) {
+      val1 = n1->value.intval;
+    } else {
+      val1 = n1->value.doubleval;
+    }
+
+    if(n2->type == OBJ_INTEGER) {
+      val1 = n2->value.intval;
+    } else {
+      val1 = n2->value.doubleval;
+    }
+
+    if(val1 > val2) {
+      return t;
+    } else {
+      return nil;
+    }
+
+  } else {
+    return nil;
+  }
+}
+
 gobject if_f(gobject args, scope *sc)
 {
   gobject cond = eval(car(args, sc), sc);

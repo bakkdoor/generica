@@ -20,6 +20,8 @@ void init_global_scope()
   scope_define_builtin(global_scope, "-", subtract, 2);
   scope_define_builtin(global_scope, "*", multiply, 2);
   scope_define_builtin(global_scope, "/", divide, 2);
+  scope_define_builtin(global_scope, "<", lt, 2);
+  scope_define_builtin(global_scope, ">", gt, 2);
 
   scope_define_builtin(global_scope, "if", if_f, 3);
   scope_define_builtin(global_scope, "unless", unless, 3);

@@ -61,6 +61,33 @@ struct gobject_t {
 #define OBJ_LAMBDA		15
 #define OBJ_CONS		20
 
+/**
+ * some helper macros
+ */
+
+#define IS_NIL(obj) \
+  obj->type == OBJ_NIL
+
+#define IS_T(obj) \
+  obj->type == OBJ_T
+
+#define IS_NUM(obj) \
+  (obj->type == OBJ_INTEGER || obj->type == OBJ_DOUBLE)
+
+#define IS_IDENT(obj) \
+  obj->type == OBJ_IDENTIFIER
+
+#define IS_STRING(obj) \
+  obj->type == OBJ_STRING
+
+#define IS_HASH(obj) \
+  obj->type == OBJ_HASH
+
+#define IS_LAMBDA(obj) \
+  obj->type == OBJ_LAMBDA
+
+#define IS_CONS(obj) \
+  obj->type == OBJ_CONS
 
 /**
  * nil & t objects 
