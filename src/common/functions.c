@@ -212,9 +212,9 @@ gobject lt(gobject args, scope *sc)
     }
 
     if(n2->type == OBJ_INTEGER) {
-      val1 = n2->value.intval;
+      val2 = n2->value.intval;
     } else {
-      val1 = n2->value.doubleval;
+      val2 = n2->value.doubleval;
     }
 
     if(val1 < val2) {
@@ -244,9 +244,9 @@ gobject gt(gobject args, scope *sc)
     }
 
     if(n2->type == OBJ_INTEGER) {
-      val1 = n2->value.intval;
+      val2 = n2->value.intval;
     } else {
-      val1 = n2->value.doubleval;
+      val2 = n2->value.doubleval;
     }
 
     if(val1 > val2) {

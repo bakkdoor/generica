@@ -7,7 +7,7 @@ int yyparse();
 scope *global_scope;
 
 #define STDLIB_FILES {"stdlib/lists.gna", "stdlib/math.gna"}
-#define N_STDLIB_FILES 1
+#define N_STDLIB_FILES 2
 
 void parse_file(char *filename)
 {
