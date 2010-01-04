@@ -59,3 +59,12 @@
     (if (< a b)
         nil
       (cons a (downto (- a 1) b)))))
+
+(define filter
+  (lambda (pred-fn list)
+    (if (empty list)
+        nil
+      (if (pred-fn (car list))
+          (cons (car list) (filter pred-fn (cdr list)))
+        (filter pred-fn (cdr list))))))
+                   

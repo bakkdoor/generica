@@ -9,3 +9,11 @@
     (if (= x y)
         t
       (> x y))))
+
+(define even?
+  (lambda (x)
+    (= (% x 2) 0)))
+
+(define odd?
+  (lambda (x)
+    (not (even? x))))
