@@ -71,6 +71,9 @@ gobject eval_funcall(gobject func_ident, gobject args, scope *sc)
   assert(func_ident);
   assert(args);
   assert(sc);
+  
+  if(func_ident->type == OBJ_LAMBDA)
+    return eval_lambda_call(func_ident, args, sc);
 
   bi = scope_get_builtin(sc, func_ident->value.identifier);
   if(bi) {

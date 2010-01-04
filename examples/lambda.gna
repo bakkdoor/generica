@@ -11,3 +11,15 @@
                   (do (println x)
                       (println x))))
 (do-test 10)
+
+(println "now the map test!")
+
+(define sq (lambda (x) (* x x)))
+
+(println (map sq '(1 2 3)))
+
+(println "now each:")
+(each (lambda (x)
+        (do (print "printing x: ")
+            (println x)))
+      '(1 2 3 4 5))
