@@ -33,3 +33,6 @@
 (println '(/ 9 3))
 (println (/ 9 3))
 (println "")
+
+(println '(upto 0 10))
+(println (upto 0 10))

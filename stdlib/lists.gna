@@ -16,3 +16,40 @@
         nil
       (do (f (car list))
           (each f (cdr list))))))
+
+(define cadr
+  (lambda (list)
+    (car (cdr list))))
+
+(define caddr
+  (lambda (list)
+    (car (cdr (cdr list)))))
+
+(define cadddr
+  (lambda (list)
+    (car (cdr (cdr (cdr list))))))
+
+
+(define caddddr
+  (lambda (list)
+    (car (cdr (cdr (cdr (cdr list)))))))
+
+(define first
+  (lambda (list)
+    (car (list))))
+
+(define second
+  (lambda (list)
+    (car (cdr (list)))))
+
+(define nth
+  (lambda (n list)
+    (if (= n 1)
+        (car list)
+      (nth (- n 1) (cdr list)))))
+
+(define upto
+  (lambda (a b)
+    (if (>= a b)
+        nil
+      (cons a (upto (+ a 1) b)))))

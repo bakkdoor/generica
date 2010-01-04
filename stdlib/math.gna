@@ -1,0 +1,11 @@
+(define <=
+  (lambda (x y)
+    (if (= x y)
+        t
+      (< x y))))
+
+(define >=
+  (lambda (x y)
+    (if (= x y)
+        t
+      (> x y))))
