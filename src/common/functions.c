@@ -34,10 +34,17 @@ gobject cdr(gobject obj, scope *sc)
   return nil;
 }
 
+gobject cons(gobject args, scope *sc)
+{
+  gobject arg1 = eval(car(args, sc), sc);
+  gobject arg2 = eval(car(cdr(args, sc), sc), sc);
+  return cons_obj(arg1, arg2);
+}
+
 gobject empty(gobject obj, scope *sc)
 {
   if(obj && obj->type == OBJ_CONS) {
-    if(!obj->value.ccell.car || obj->value.ccell.car == nil) {
+    if(length(obj, sc) == 0) {
       return t;
     } else {
       return nil;
@@ -52,7 +59,7 @@ gobject length(gobject cons, scope *sc)
 {
   int length = 0;
   gobject tmp = cons;
-  while(tmp != nil) {
+  while(tmp != nil && car(tmp, sc) != nil) {
     length += 1;
     tmp = cdr(tmp, sc);
   }
@@ -259,7 +266,10 @@ gobject do_f(gobject args, scope *sc)
 
 gobject special(gobject args, scope *sc)
 {
-  return args;
+  gobject arglist = car(args, sc);
+  gobject forms = car(cdr(args, sc), sc);
+  
+  return lambda_obj(arglist, forms);
 }
 
 gobject eval_f(gobject obj, scope *sc)

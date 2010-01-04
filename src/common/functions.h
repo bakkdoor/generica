@@ -25,6 +25,9 @@ gobject cdr(gobject obj, scope *sc);
  * @param The cons cell object.
  * @return t or nil, depending on if it's empty or not.
  */
+
+gobject cons(gobject args, scope *sc);
+
 gobject empty(gobject obj, scope *sc);
 
 gobject length(gobject cons, scope *sc);

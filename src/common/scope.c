@@ -5,9 +5,13 @@ void init_global_scope()
   /* init to NULL */
   global_scope->builtins = NULL;
 
+  scope_define(global_scope, identifier_obj("nil"), nil);
+  scope_define(global_scope, identifier_obj("t"), t);
+
   /* scope_define_builtin("define", define); */
   scope_define_builtin(global_scope, "car", car, 1);
   scope_define_builtin(global_scope, "cdr", cdr, 1);
+  scope_define_builtin(global_scope, "cons", cons, 2);
   scope_define_builtin(global_scope, "empty", empty, 1);
   scope_define_builtin(global_scope, "length", length, 1);
   scope_define_builtin(global_scope, "print", print_object_stdout, 1);
