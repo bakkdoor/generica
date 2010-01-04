@@ -1,0 +1,18 @@
+(define empty 
+  (lambda (list)
+    (if (= (length list) 0)
+        t
+      nil)))
+
+(define map 
+  (lambda (f list)
+    (if (empty list)
+        nil
+      (cons (f (car list)) (map f (cdr list))))))
+
+(define each
+  (lambda (f list)
+    (if (empty list)
+        nil
+      (do (f (car list))
+          (each f (cdr list))))))
