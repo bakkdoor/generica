@@ -20,15 +20,7 @@ gobject car(gobject obj, scope *sc);
  */
 gobject cdr(gobject obj, scope *sc);
 
-/**
- * Indicates, if a given object (cons cell) is empty.
- * @param The cons cell object.
- * @return t or nil, depending on if it's empty or not.
- */
-
 gobject cons(gobject args, scope *sc);
-
-gobject empty(gobject obj, scope *sc);
 
 gobject length(gobject cons, scope *sc);
 

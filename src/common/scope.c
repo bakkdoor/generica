@@ -12,7 +12,6 @@ void init_global_scope()
   scope_define_builtin(global_scope, "car", car, 1);
   scope_define_builtin(global_scope, "cdr", cdr, 1);
   scope_define_builtin(global_scope, "cons", cons, 2);
-  scope_define_builtin(global_scope, "empty", empty, 1);
   scope_define_builtin(global_scope, "length", length, 1);
   scope_define_builtin(global_scope, "print", print_object_stdout, 1);
   scope_define_builtin(global_scope, "println", println_object_stdout, 1);

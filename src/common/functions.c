@@ -41,20 +41,6 @@ gobject cons(gobject args, scope *sc)
   return cons_obj(arg1, arg2);
 }
 
-gobject empty(gobject obj, scope *sc)
-{
-  if(obj && obj->type == OBJ_CONS) {
-    if(length(obj, sc) == 0) {
-      return t;
-    } else {
-      return nil;
-    }
-  } else {
-    warn("Calling 'empty' on non-list object!");
-    return nil;
-  }
-}
-
 gobject length(gobject cons, scope *sc)
 {
   int length = 0;

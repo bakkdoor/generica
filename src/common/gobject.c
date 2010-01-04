@@ -115,7 +115,7 @@ void print_object(gobject obj, scope *sc, FILE *stream)
       break;
     case OBJ_CONS:
       fprintf(stream, "(");
-      if(empty(obj, sc) == nil) {
+      if(length(obj, sc)->value.intval != 0) {
         gobject curr_cons = obj;
         while(curr_cons != nil) {
           print_object(car(curr_cons, sc), sc, stream);          
