@@ -17,3 +17,15 @@
 (define odd?
   (lambda (x)
     (not (even? x))))
+
+(define sum (list)
+  (reduce 0
+          (lambda (x y)
+              (+ x y))
+          list))
+
+(define product (list)
+  (reduce 1 
+          (lambda (x y)
+            (* x y))
+          list))

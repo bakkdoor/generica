@@ -1,4 +1,4 @@
-(define empty 
+(define empty? 
   (lambda (list)
     (if (= (length list) 0)
         t
@@ -6,13 +6,13 @@
 
 (define map 
   (lambda (f list)
-    (if (empty list)
+    (if (empty? list)
         nil
       (cons (f (car list)) (map f (cdr list))))))
 
 (define each
   (lambda (f list)
-    (if (empty list)
+    (if (empty? list)
         nil
       (do (f (car list))
           (each f (cdr list))))))
@@ -62,9 +62,45 @@
 
 (define filter
   (lambda (pred-fn list)
-    (if (empty list)
+    (if (empty? list)
         nil
       (if (pred-fn (car list))
           (cons (car list) (filter pred-fn (cdr list)))
         (filter pred-fn (cdr list))))))
-                   
+
+; Returns the first 'amount' Elements of the given List
+(define take
+  (lambda (amount lst)
+    (if (> amount 0)
+        (cons (car lst) (take (- amount 1) (cdr lst)))
+      nil)))
+
+; Skips the first 'amount' Elements of the List and returns the Rest
+(define skip 
+  (lambda (amount lst)
+    (let ((rest (cdr lst)))
+      (if (> amount 1)
+          (skip (- amount 1) rest)
+        rest))))
+
+; Takes Elements out of a List while 'predicatefn' is true to the Elements of it.
+; Returns Elements took out in a List
+(define take-while 
+  (lambda (predicatefn lst)
+    (if (predicatefn (car lst))
+        (cons (car lst) (take-while predicatefn (cdr lst)))
+      nil)))
+
+; Skips Elemnts while 'predicatefn' isn't true to the List
+(define skip-while 
+  (lambda (predicatefn lst)
+    (if (predicatefn (car lst))
+        (skip-while predicatefn (cdr lst))
+      lst)))
+
+(define reduce 
+  (lambda (fn base-value list)
+    (if (empty? list)
+        base-value
+      (fn (car list)
+	  (reduce fn base-value (cdr list))))))
