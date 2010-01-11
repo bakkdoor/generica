@@ -14,11 +14,13 @@ struct scope_s;
 typedef struct cons_cell_t {
   gobject car;
   gobject cdr;
+  bool *is_first;
 } cons_cell;
 
 typedef struct lambda_t {
   gobject args;
   gobject body;
+  bool *special; /* used for 'special' functions (like macros) */
 } lambda_expression;
 
 struct gobject_t {
@@ -92,8 +94,14 @@ struct gobject_t {
 #define IS_LAMBDA(obj) \
   obj->type == OBJ_LAMBDA
 
+#define IS_SPECIAL_LAMBDA(obj) \
+  (IS_LAMBDA(obj) && *(obj->value.lambdaval.special))
+
 #define IS_CONS(obj) \
   obj->type == OBJ_CONS
+
+#define IS_FIRST_CONS(obj) \
+  (IS_CONS(obj) && *(obj->value.ccell.is_first))
 
 #define NUMVAL(obj) \
   IS_NUM(obj) ? (IS_INT(obj) ? obj->value.intval : obj->value.doubleval) : 0
@@ -170,6 +178,15 @@ gobject cons_obj(gobject car, gobject cdr);
  * @return New lambda_expression object.
  */ 
 gobject lambda_obj(gobject args, gobject body);
+
+/**
+ * Creates a special lambda_expression object (like macro) with a
+ * given argument list & body.
+ * @param args Argument list cons cell.
+ * @param body Lambda body cons cell.
+ * @return New special lambda_expression object.
+ */ 
+gobject special_lambda_obj(gobject args, gobject body);
 
 /**
  * (Pretty)prints a given object to a given file stream.

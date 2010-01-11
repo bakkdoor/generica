@@ -1,0 +1,32 @@
+(define when
+  (special (condition forms)
+           (if (eval condition)
+               (do (map (lambda (form)
+                          (eval form))
+                        forms)))))
+
+(when (= 3 3)
+  (println "yo")
+  (println "OKIDOKI!"))
+
+
+(define x 0)
+(define y 5)
+(while (not (= x y))
+  (println x)
+  (define x (+ x 1)))
+
+;; (define let
+;;   (special (name-val-list forms)
+;;            ((lambda (map first name-val-list)
+;;               (do (map eval forms)))
+;;             (map second name-val-list))))
+
+;; (let ('(x 0) '(y 10))
+;;   (println x)
+;;   (println y))
+
+;; ((lambda (x)
+;;    (do (println "in lambda!")
+;;        (println x)))
+;;  145)

@@ -33,6 +33,7 @@ void init_global_scope()
   scope_define_builtin(global_scope, "eval", eval_f, 1);
 
   scope_define_builtin(global_scope, "not", not, 1);
+  scope_define_builtin_special(global_scope, "while", while_f, 2);
 }
 
 void scope_define_builtin(scope *sc, char *ident, gobject (*func)(gobject args, scope *sc), unsigned int n_args)

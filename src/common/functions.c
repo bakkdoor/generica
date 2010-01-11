@@ -329,8 +329,11 @@ gobject special(gobject args, scope *sc)
 {
   gobject arglist = car(args, sc);
   gobject forms = car(cdr(args, sc), sc);
+
+  assert(arglist->type == OBJ_CONS);
+  assert(forms->type == OBJ_CONS);
   
-  return lambda_obj(arglist, forms);
+  return special_lambda_obj(arglist, forms);
 }
 
 gobject eval_f(gobject obj, scope *sc)
@@ -361,4 +364,17 @@ gobject not(gobject obj, scope *sc)
   } else {
     return nil;
   }
+}
+
+gobject while_f(gobject args, scope *sc)
+{
+  gobject condition = car(args, sc);
+  gobject forms = cdr(args, sc);
+  gobject retval;
+
+  while(eval(condition, sc) != nil) {
+    retval = do_f(forms, sc);
+  }
+
+  return retval;
 }

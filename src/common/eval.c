@@ -16,7 +16,7 @@ gobject eval(gobject obj, scope *sc)
   case OBJ_IDENTIFIER:
     return eval_identifier(obj, sc);
   case OBJ_CONS:
-    return eval_cons(obj, sc);
+    return eval_cons(obj, sc, false);
   default:
     return nil;
   }
@@ -28,9 +28,11 @@ gobject eval_identifier(gobject obj, scope *sc)
   return val;
 }
 
-gobject eval_cons(gobject obj, scope *sc)
+gobject eval_cons(gobject obj, scope *sc, bool is_first)
 {
   gobject ident_val = NULL;
+  gobject inline_lambda = NULL;
+
   if(obj->type == OBJ_CONS) {
     /* TODO: fix this! */
     /* return eval(car(obj), sc); */
@@ -53,6 +55,16 @@ gobject eval_cons(gobject obj, scope *sc)
       } else {
         return obj;
       }
+      break;
+    case OBJ_CONS:
+      if(is_first) {
+        inline_lambda = eval(car(obj, sc), sc);
+        /* check, if we have an inline-defined lambda object here */
+        if(inline_lambda && IS_LAMBDA(inline_lambda)) {
+          return eval_lambda_call(inline_lambda, cdr(obj, sc), sc);
+        }
+      }
+      return obj;
       break;
     default:
       return obj;
@@ -112,16 +124,39 @@ gobject eval_lambda_call(gobject lambda, gobject args, scope *sc)
   gobject arg;
   gobject retval;
   scope *call_scope;
+  int arg_diff;
+  int i;
+  gobject remaining_args;
+  gobject normal_args;
 
   int n_args = length(args, sc)->value.intval;
   int n_formal_args = length(lambda->value.lambdaval.args, sc)->value.intval;
 
-  if(n_args != n_formal_args){
+  if(n_args != n_formal_args && !IS_SPECIAL_LAMBDA(lambda)){
     warn("Formal arg count is wrong: %d instead of %d", n_args, n_formal_args);
     return nil;
   }
 
   call_scope = new_scope(sc);
+
+  if(IS_SPECIAL_LAMBDA(lambda)) {
+    /* create cons cell with all remaining args in one */
+    arg_diff = n_args - n_formal_args;
+    remaining_args = args;
+    normal_args = NULL;
+    if(arg_diff >= 0) {
+      for(i = 0; i < arg_diff; i++) {
+        normal_args = cons_obj(car(remaining_args, sc), normal_args);
+        remaining_args = cdr(remaining_args, sc);
+      }
+      remaining_args = cons_obj(remaining_args, nil);
+      args = cons_obj(car(normal_args, sc), remaining_args);
+    } else { 
+      /* OK, something's wrong! */
+      warn("Less arguments given (%d) than at least required (%d) for special lambda!", n_args, n_formal_args);
+      return nil;
+    }
+  }
 
   /* set args in call_scope */
   formal_arg = lambda->value.lambdaval.args;

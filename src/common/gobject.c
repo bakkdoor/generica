@@ -57,6 +57,8 @@ gobject cons_obj(gobject car, gobject cdr)
   gobject obj = new_object(OBJ_CONS);
   obj->value.ccell.car = car;
   obj->value.ccell.cdr = cdr;
+  obj->value.ccell.is_first = malloc(sizeof(bool));
+  *(obj->value.ccell.is_first) = true;
   return obj;
 }
 
@@ -82,8 +84,20 @@ gobject lambda_obj(gobject args, gobject body)
   
   lambda->value.lambdaval.args = args;
   lambda->value.lambdaval.body = body;
+  lambda->value.lambdaval.special = malloc(sizeof(bool));
+  *(lambda->value.lambdaval.special) = false;
 
   debug("new lambda expression");
+
+  return lambda;
+}
+
+gobject special_lambda_obj(gobject args, gobject body)
+{
+  gobject lambda = lambda_obj(args, body);
+  *(lambda->value.lambdaval.special) = true;
+
+  debug("new special lambda expression");
 
   return lambda;
 }

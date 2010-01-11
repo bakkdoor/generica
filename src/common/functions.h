@@ -60,4 +60,6 @@ gobject eval_f(gobject obj, scope *sc);
 
 gobject not(gobject obj, scope *sc);
 
+gobject while_f(gobject args, scope *sc);
+
 #endif /* _COMMON_FUNCTIONS_H_ */
