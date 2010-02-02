@@ -4,15 +4,18 @@
 ========================================================================
 
 (goals)
-  - implement a simple, yet powerful lisp-like language with:
-    - a simple, yet useful object system
-    - good concurrency semantics (via messaging, erlang style)
-    - focus on immutability (but not purely functional like Haskell)
+  - implement a simple lisp-like language
   - have fun implementing it
   - use ANSI C for the interpreter and possibly no external dependencies
   - small codebase and fast compilation, if possible
+  - this is just for fun and nothing really serious
 
-(contact)
-  - contact me via my email adress shown above.
-
-(more information coming soon)
+(status)
+  - development isn't really going anywhere - this was more or less
+    merely a introduction of myself to language design & implementation
+  - many memory leaks - in fact I've written such bad code, that there
+    is nearly not one free() call in the entire codebase (shame on me!)
+    -> I guess garbage collection (BoehmGC) would help here
+  - feel free to use it as a learning reference or whatever :)
+    I'm planning on implementing a (more serious) new Ruby-like
+    language in C++ here soon.
